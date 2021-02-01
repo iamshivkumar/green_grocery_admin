@@ -1,0 +1,209 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:green_grocery_admin/core/streams/product_stream_provider.dart';
+import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
+import 'add_edit_product_page.dart';
+import 'widgets/product_image_viewer.dart';
+
+class ProductPage extends ConsumerWidget {
+  final String id;
+  ProductPage({this.id});
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    var productStream = watch(productStreamProvider(id));
+    var model = context.read(addEditProductViewModelProvider);
+    return productStream.when(
+      data: (product) => Scaffold(
+        backgroundColor: Colors.green[50],
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                model.initializeModelForEdit(product);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddEditProductPage(
+                      forEdit: true,
+                    ),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(
+                        "Are you sure you want to delete \"${product.name}\" product"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("No"),
+                      ),
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          model.deleteProduct(product);
+                        },
+                        child: Text("Yes"),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+          title: Text(product.name),
+        ),
+        bottomNavigationBar: PreferredSize(
+          child: SizedBox(
+            height: 56,
+            child: Material(
+              color: Colors.white,
+              elevation: 8,
+              child: product.quantity > 0
+                  ? Consumer(
+                      builder: (context, watch, child) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              color: Theme.of(context).primaryColor,
+                              splashColor: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2),
+                              highlightColor: Colors.transparent,
+                              icon: Icon(Icons.remove_circle_outline),
+                              onPressed: product.quantity != 0
+                                  ? () => model.updateProductQuantity(
+                                      id: product.id, qt: -1)
+                                  : null,
+                              iconSize: 32,
+                            ),
+                            Text(
+                              product.quantity.toString(),
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            ),
+                            IconButton(
+                              color: Theme.of(context).primaryColor,
+                              splashColor: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2),
+                              highlightColor: Colors.transparent,
+                              icon: Icon(Icons.add_circle_outline),
+                              onPressed: () => model.updateProductQuantity(
+                                  id: product.id, qt: 1),
+                              iconSize: 32,
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text("Out Of Stock"),
+                    ),
+            ),
+          ),
+          preferredSize: Size.fromHeight(56),
+        ),
+        body: ListView(
+          children: [
+            Material(
+              color: Colors.white,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ProductImageViewer(
+                    images: product.images,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Text(
+                        '₹' + product.price.toString() + " /",
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Theme.of(context).primaryColor),
+                      ),
+                      Text(
+                        product.amount,
+                        style: TextStyle(color: Colors.green),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: product.active,
+                        onChanged: (v) =>
+                            model.setProductStatus(id: product.id, value: v),
+                      ),
+                      Text("Active   "),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    product.name,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: product.popular,
+                        onChanged: (v) => model.setProductPopularity(
+                            id: product.id, value: v),
+                      ),
+                      Text("Popular"),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text(
+                product.category,
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text(product.description),
+            )
+          ],
+        ),
+      ),
+      loading: () => Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Text(error.toString()),
+    );
+  }
+}
