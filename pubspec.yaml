@@ -42,7 +42,7 @@ dependencies:
   geocoder: ^0.2.1
   pin_code_fields: ^6.0.2
   equatable: ^1.2.5
-
+  http: ^0.12.2
   fluttertoast: ^7.1.6
   modal_progress_hud: ^0.1.3
 

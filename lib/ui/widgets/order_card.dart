@@ -20,7 +20,7 @@ class OrderCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => OrderDetailsPage(
                 key: Key(order.id),
-                order: order,
+                id: order.id,
               ),
             ),
           ),

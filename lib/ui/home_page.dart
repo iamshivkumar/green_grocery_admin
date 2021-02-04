@@ -4,7 +4,9 @@ import 'package:green_grocery_admin/core/streams/popular_product_list_stream_pro
 import 'package:green_grocery_admin/core/streams/product_list_stream_provider.dart';
 import 'package:green_grocery_admin/ui/delivery_boys_page.dart';
 import 'package:green_grocery_admin/ui/orders_page.dart';
+import 'package:green_grocery_admin/ui/refund_requests_page.dart';
 import 'add_edit_product_page.dart';
+import 'areas_page.dart';
 import 'widgets/product_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -45,6 +47,30 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) => DeliveryBoysPage(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: Text("Refund Requests"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => RefundRequestsPage(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: Text("Areas"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AreasPage(),
                       ),
                     );
                   },

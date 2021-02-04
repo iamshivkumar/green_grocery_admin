@@ -21,28 +21,30 @@ class Order {
   final Timestamp timestamp;
   final String status;
   final String paymentID;
-
-  Order(
-      {this.customerAddress,
-      this.customerMobile,
-      this.customerName,
-      this.id,
-      this.price,
-      this.paymentStatus,
-      this.paymentMethod,
-      this.products,
-      this.delivery,
-      this.tax,
-      this.totalPrice,
-      this.date,
-      this.deliveryBy,
-      this.code,
-      this.items,
-      this.timestamp,
-      this.status,
-      this.geoPoint,
-      this.walletAmount,
-      this.paymentID});
+  final String deliveryBoy;
+  Order({
+    this.customerAddress,
+    this.customerMobile,
+    this.customerName,
+    this.id,
+    this.price,
+    this.paymentStatus,
+    this.paymentMethod,
+    this.products,
+    this.delivery,
+    this.tax,
+    this.totalPrice,
+    this.date,
+    this.deliveryBy,
+    this.code,
+    this.items,
+    this.timestamp,
+    this.status,
+    this.geoPoint,
+    this.walletAmount,
+    this.paymentID,
+    this.deliveryBoy,
+  });
 
   factory Order.fromFirestore({DocumentSnapshot doc}) {
     Map data = doc.data();
@@ -68,6 +70,7 @@ class Order {
       geoPoint: data['location'],
       walletAmount: data['walletAmount'],
       paymentID: data['paymentID'],
+      deliveryBoy: data["deliveryBoy"] ?? "",
     );
   }
 }
