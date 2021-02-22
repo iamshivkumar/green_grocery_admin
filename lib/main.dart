@@ -19,11 +19,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = context.read(authViewModelProvider).user;
+    final Color accentColor = Color(0xFF4E598C);
     return MaterialApp(
       title: 'Green Grocery Admin',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        scaffoldBackgroundColor: Color(0xFFFEF6EC),
+        primaryColor: Color(0xFFFCAF58),
+        primaryColorDark: Color(0xFFFF8C42),
+        backgroundColor: Colors.white,
+        accentColor: accentColor,
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: accentColor,
+            shape: RoundedRectangleBorder(),
+          ),
+        ),
+        primaryColorLight: Color(0xFFFDEDD8),
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: accentColor),
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          buttonColor: accentColor,
+          textTheme: ButtonTextTheme.primary,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: user != null ? HomePage() : LoginPage(),

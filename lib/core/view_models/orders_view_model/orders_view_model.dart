@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:green_grocery_admin/core/models/deliveryBoy.dart';
 
 class OrdersViewModel extends ChangeNotifier {
+  
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String deliveryDay;
   String deliveryBy;
@@ -26,12 +28,17 @@ class OrdersViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAsOutForDelivery(
-      {String id}) {
+  void setAsOutForDelivery({String id}) {
     _firestore.collection("orders").doc(id).update({
       "status": "Out For Delivery",
       "deliveryBoy": deliveryBoy.name,
       "deliveryBoyId": deliveryBoy.id,
     });
+  }
+
+  bool mapMode = false;
+  void setMapMode(bool value) {
+    mapMode = value;
+    notifyListeners();
   }
 }

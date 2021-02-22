@@ -85,10 +85,16 @@ class OrderDetailsPage extends ConsumerWidget {
                         var product = CartProduct.fromJson(e);
                         return ListTile(
                           title: Text(product.name),
-                          leading: Image.network(product.image),
-                          subtitle: Text(product.qt.toString() +
-                              " Items x ₹" +
-                              product.price.toString()),
+                          leading: SizedBox(
+                            height: 56,
+                            width: 56,
+                            child: Image.network(product.image),
+                          ),
+                          subtitle: Text(
+                            product.qt.toString() +
+                                " Items x ₹" +
+                                product.price.toString(),
+                          ),
                           trailing: Text(
                             "₹" + (product.qt * product.price).toString(),
                           ),
@@ -235,16 +241,19 @@ class DeliveryBoySelector extends ConsumerWidget {
           ),
           Expanded(
             child: deliveryBoysStream.when(
-              data: (deliveryBoys) => ListView(
-                children: deliveryBoys
-                    .map(
-                      (e) => CustomRadioListTile(
-                        value: e == model.deliveryBoy,
-                        onTap: () => model.setDeliveryBoy(e),
-                        title: Text(e.name),
-                      ),
-                    )
-                    .toList(),
+              data: (deliveryBoys) => Material(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: ListView(
+                  children: deliveryBoys
+                      .map(
+                        (e) => CustomRadioListTile(
+                          value: e == model.deliveryBoy,
+                          onTap: () => model.setDeliveryBoy(e),
+                          title: Text(e.name),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
               loading: () => Center(
                 child: CircularProgressIndicator(),

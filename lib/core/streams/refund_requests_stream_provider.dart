@@ -9,6 +9,7 @@ final refundRequestsStreamProvider = StreamProvider<List<Wallet>>(
         .collection('wallets')
         .where("refundRequested", isEqualTo: true)
         .snapshots()
-        .map((event) => event.docs.map((e) => Wallet.fromFirestore(e)).toList());
+        .map(
+            (event) => event.docs.map((e) => Wallet.fromFirestore(e)).toList());
   },
 );

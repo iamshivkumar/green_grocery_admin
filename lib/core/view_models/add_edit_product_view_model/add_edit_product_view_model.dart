@@ -50,6 +50,7 @@ class AddEditProductViewModel extends ChangeNotifier {
     'Drinks',
     'Snacks'
   ];
+  
   String category = "Fruits";
   void setCategory(String value) {
     category = value;

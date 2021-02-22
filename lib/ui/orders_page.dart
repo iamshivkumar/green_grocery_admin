@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_grocery_admin/core/service/date.dart';
-import 'package:green_grocery_admin/core/streams/orders_list_stream_provider.dart';
 import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
-import 'widgets/order_card.dart';
+import 'package:green_grocery_admin/ui/widgets/orders_map_view.dart';
+import 'widgets/orders_card_view.dart';
 
-class OrdersPage extends ConsumerWidget {
+class OrdersPage extends StatefulWidget {
+  @override
+  _OrdersPageState createState() => _OrdersPageState();
+}
+
+class _OrdersPageState extends State<OrdersPage>
+    with SingleTickerProviderStateMixin {
   final List<String> tabTexts = [
     "Pending",
     "Packed",
@@ -13,106 +19,159 @@ class OrdersPage extends ConsumerWidget {
     "Delivered",
     "Cancelled"
   ];
+
   final List<String> deliveryByRanges = [
     "9:00 AM - 10:30 AM",
     '10:00 AM - 11:00 AM',
     '12:00 PM - 1:00 PM',
     '2:00 PM - 4:00 PM'
   ];
+  TabController _controller;
   final Date _date = Date();
+
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    var model = watch(ordersViewModelProvider);
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('My Orders'),
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: tabTexts
-                .map(
-                  (e) => Tab(
-                    text: e,
+  void initState() {
+    _controller = TabController(vsync: this, length: 5);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, watch, child) {
+        var model = watch(ordersViewModelProvider);
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              Stack(
+                children: [
+                  Center(
+                    child: Icon(
+                      Icons.map_outlined,
+                      size: 32,
+                      color: Colors.white,
+                    ),
                   ),
-                )
-                .toList(),
-          ),
-        ),
-        body: Stack(
-          children: [
-            TabBarView(
-              children: tabTexts
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 4, bottom: 4),
+                      child: Icon(
+                        Icons.location_pin,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Switch(
+                value: model.mapMode,
+                onChanged: model.setMapMode,
+              ),
+            ],
+            title: Text('My Orders'),
+            bottom: TabBar(
+              onTap: (value) {
+                if (model.mapMode) {
+                  setState(() {});
+                }
+              },
+              controller: _controller,
+              isScrollable: true,
+              tabs: tabTexts
                   .map(
-                    (e) => OrdersPageView(
-                      status: e,
+                    (e) => Tab(
+                      text: e,
                     ),
                   )
                   .toList(),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Material(
-                color: Colors.white,
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Column(
+          ),
+          body: Stack(
+            children: [
+              model.mapMode
+                  ? OrdersMapView(
+                      status: tabTexts[_controller.index],
+                    )
+                  : TabBarView(
+                      controller: _controller,
+                      children: tabTexts
+                          .map(
+                            (e) => OrdersPageView(
+                              status: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Material(
+                  color: Colors.white,
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Text("Delivery Day"),
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                              child: Text(
+                                "Filter through delivery day and delivery by:",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: ChoiceChip(
-                                      onSelected: (value) =>
-                                          model.setDeliveryDay(null),
-                                      selected: model.deliveryDay == null,
-                                      label: Text("All"),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     child: ChoiceChip(
                                       selected: model.deliveryDay ==
                                           _date.activeDate(0),
-                                      onSelected: (value) => model
-                                          .setDeliveryDay(_date.activeDate(0)),
+                                      onSelected: (value) =>
+                                          model.setDeliveryDay(value
+                                              ? _date.activeDate(0)
+                                              : null),
                                       label: Text("Today"),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(4.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     child: ChoiceChip(
                                       selected: model.deliveryDay ==
                                           _date.activeDate(1),
-                                      onSelected: (value) => model
-                                          .setDeliveryDay(_date.activeDate(1)),
+                                      onSelected: (value) =>
+                                          model.setDeliveryDay(value
+                                              ? _date.activeDate(1)
+                                              : null),
                                       label: Text("Tommorow"),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(4.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     child: ChoiceChip(
                                       selected: model.deliveryDay ==
                                           _date.activeDate(2),
-                                      onSelected: (value) => model
-                                          .setDeliveryDay(_date.activeDate(2)),
+                                      onSelected: (value) =>
+                                          model.setDeliveryDay(value
+                                              ? _date.activeDate(2)
+                                              : null),
                                       label: Text(_date.activeDay(2)),
                                     ),
                                   ),
@@ -121,98 +180,43 @@ class OrdersPage extends ConsumerWidget {
                             ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Text("Delivery By"),
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: ChoiceChip(
-                                      selected: model.deliveryBy == null,
-                                      onSelected: (value) =>
-                                          model.setDeliveryBy(null),
-                                      label: Text("All"),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: deliveryByRanges
-                                        .map(
-                                          (e) => Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: ChoiceChip(
-                                              selected: model.deliveryBy == e,
-                                              onSelected: (value) =>
-                                                  model.setDeliveryBy(e),
-                                              label: Text(e),
-                                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: deliveryByRanges
+                                      .map(
+                                        (e) => Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              4, 0, 4, 4),
+                                          child: ChoiceChip(
+                                            selected: model.deliveryBy == e,
+                                            onSelected: (value) =>
+                                                model.setDeliveryBy(
+                                                    value ? e : null),
+                                            label: Text(e),
                                           ),
-                                        )
-                                        .toList(),
-                                  )
-                                ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class OrdersPageView extends ConsumerWidget {
-  final String status;
-  OrdersPageView({this.status});
-  @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    var ordersListStream = watch(ordersListStreamProvider(status));
-    var model = context.read(ordersViewModelProvider);
-    return ordersListStream.when(
-      data: (ordersList) => ListView(
-        padding: EdgeInsets.all(4),
-        children: <Widget>[
-              SizedBox(
-                height: 180,
-              )
-            ] +
-            ordersList
-                .where((element) => model.deliveryDay != null
-                    ? element.date == model.deliveryDay
-                    : true)
-                .where((element) => model.deliveryBy != null
-                    ? element.deliveryBy == model.deliveryBy
-                    : true)
-                .map(
-                  (e) => OrderCard(
-                    order: e,
-                    key: Key(e.id),
-                  ),
-                )
-                .toList(),
-      ),
-      loading: () => Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (error, stackTrace) => Text(
-        error.toString(),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -18,7 +18,7 @@ class _ProductImageViewerState extends State<ProductImageViewer> {
 
   void setController(int value) {
     _pageController.animateToPage(value,
-        duration: Duration(milliseconds: 250), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 200), curve: Curves.easeInCirc);
   }
 
   PageController _pageController;
@@ -47,7 +47,9 @@ class _ProductImageViewerState extends State<ProductImageViewer> {
             children: widget.images
                 .map(
                   (e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,vertical: 16
+                    ),
                     child: Image.network(
                       e,
                     ),
@@ -59,7 +61,9 @@ class _ProductImageViewerState extends State<ProductImageViewer> {
         Expanded(
           flex: 1,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,vertical: 16
+            ),
             child: ListView.builder(
               itemCount: widget.images.length,
               itemBuilder: (context, index) => Row(

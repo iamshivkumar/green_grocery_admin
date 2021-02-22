@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_grocery_admin/core/streams/product_stream_provider.dart';
 import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
 import 'add_edit_product_page.dart';
@@ -14,7 +14,7 @@ class ProductPage extends ConsumerWidget {
     var model = context.read(addEditProductViewModelProvider);
     return productStream.when(
       data: (product) => Scaffold(
-        backgroundColor: Colors.green[50],
+        backgroundColor: Theme.of(context).primaryColorLight,
         appBar: AppBar(
           actions: [
             IconButton(
@@ -61,58 +61,53 @@ class ProductPage extends ConsumerWidget {
           ],
           title: Text(product.name),
         ),
-        bottomNavigationBar: PreferredSize(
-          child: SizedBox(
-            height: 56,
-            child: Material(
-              color: Colors.white,
-              elevation: 8,
-              child: product.quantity > 0
-                  ? Consumer(
-                      builder: (context, watch, child) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              color: Theme.of(context).primaryColor,
-                              splashColor: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.2),
-                              highlightColor: Colors.transparent,
-                              icon: Icon(Icons.remove_circle_outline),
-                              onPressed: product.quantity != 0
-                                  ? () => model.updateProductQuantity(
-                                      id: product.id, qt: -1)
-                                  : null,
-                              iconSize: 32,
+        bottomNavigationBar: SizedBox(
+          height: 56,
+          child: Material(
+            color: Colors.white,
+            elevation: 8,
+            child: product.quantity > 0
+                ? Consumer(
+                    builder: (context, watch, child) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            color: Theme.of(context).primaryColor,
+                            splashColor:
+                                Theme.of(context).primaryColor.withOpacity(0.2),
+                            highlightColor: Colors.transparent,
+                            icon: Icon(Icons.remove_circle_outline),
+                            onPressed: product.quantity != 0
+                                ? () => model.updateProductQuantity(
+                                    id: product.id, qt: -1)
+                                : null,
+                            iconSize: 32,
+                          ),
+                          Text(
+                            product.quantity.toString(),
+                            style: TextStyle(
+                              fontSize: 24,
                             ),
-                            Text(
-                              product.quantity.toString(),
-                              style: TextStyle(
-                                fontSize: 24,
-                              ),
-                            ),
-                            IconButton(
-                              color: Theme.of(context).primaryColor,
-                              splashColor: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.2),
-                              highlightColor: Colors.transparent,
-                              icon: Icon(Icons.add_circle_outline),
-                              onPressed: () => model.updateProductQuantity(
-                                  id: product.id, qt: 1),
-                              iconSize: 32,
-                            ),
-                          ],
-                        );
-                      },
-                    )
-                  : Center(
-                      child: Text("Out Of Stock"),
-                    ),
-            ),
+                          ),
+                          IconButton(
+                            color: Theme.of(context).primaryColor,
+                            splashColor:
+                                Theme.of(context).primaryColor.withOpacity(0.2),
+                            highlightColor: Colors.transparent,
+                            icon: Icon(Icons.add_circle_outline),
+                            onPressed: () => model.updateProductQuantity(
+                                id: product.id, qt: 1),
+                            iconSize: 32,
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                : Center(
+                    child: Text("Out Of Stock"),
+                  ),
           ),
-          preferredSize: Size.fromHeight(56),
         ),
         body: ListView(
           children: [
@@ -120,11 +115,8 @@ class ProductPage extends ConsumerWidget {
               color: Colors.white,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ProductImageViewer(
-                    images: product.images,
-                  ),
+                child: ProductImageViewer(
+                  images: product.images,
                 ),
               ),
             ),
@@ -138,6 +130,7 @@ class ProductPage extends ConsumerWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
                         '₹' + product.price.toString() + " /",
@@ -147,7 +140,7 @@ class ProductPage extends ConsumerWidget {
                       ),
                       Text(
                         product.amount,
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
