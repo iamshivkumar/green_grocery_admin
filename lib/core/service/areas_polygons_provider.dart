@@ -20,5 +20,3 @@ final areasPolygonsProvider = FutureProvider<Set<Polygon>>(
     }).toSet();
   },
 );
-
-// var s = GoogleMap(initialCameraPosition: ).polygons.contains(LatLng(latitude, longitude))

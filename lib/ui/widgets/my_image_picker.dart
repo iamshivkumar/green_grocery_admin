@@ -19,13 +19,14 @@ class MyImagePicker extends StatelessWidget {
             maxHeight: 200,
             maxWidth: 200,
             aspectRatioPresets: [
-              // CropAspectRatioPreset.square,
-              // CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
               CropAspectRatioPreset.original,
-              // CropAspectRatioPreset.ratio4x3,
-              // CropAspectRatioPreset.ratio16x9
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9
+              
             ],
-            aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+            // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
             cropStyle: CropStyle.rectangle,
             androidUiSettings: AndroidUiSettings(
                 toolbarTitle: 'Cropper',

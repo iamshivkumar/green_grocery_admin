@@ -64,6 +64,7 @@ class OrderCard extends StatelessWidget {
   }
 }
 
+///[SmallOrderCard] used in [Orders_Map_View] widget
 class SmallOrderCard extends StatelessWidget {
   final Order order;
   const SmallOrderCard({Key key, this.order}) : super(key: key);

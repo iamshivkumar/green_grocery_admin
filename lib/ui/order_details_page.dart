@@ -30,8 +30,7 @@ class OrderDetailsPage extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: MaterialButton(
-                    colorBrightness: Brightness.dark,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     onPressed: () {
                       model.setAsPacked(id);
                     },
@@ -42,8 +41,7 @@ class OrderDetailsPage extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: MaterialButton(
-                    colorBrightness: Brightness.dark,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,

@@ -87,7 +87,9 @@ class ProductCard extends StatelessWidget {
                         : null,
                     child: Icon(Icons.remove_circle_outline),
                   ),
-                  Text(product.quantity.toString()),
+                  Text(product.quantity.toString(),style: TextStyle(
+                    color: product.quantity==0?Colors.red:Colors.black
+                  ),),
                   TextButton(
                     onPressed: () =>
                         model.updateProductQuantity(id: product.id, qt: 1),

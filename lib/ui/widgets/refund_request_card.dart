@@ -45,7 +45,7 @@ class RefundRequestCard extends StatelessWidget {
                         ? CircularProgressIndicator()
                         : MaterialButton(
                             onPressed: () => model.refund(),
-                            child: Text("Refund"),
+                            child: Text("REFUND"),
                             color: Theme.of(context).accentColor,
                           ),
                   );

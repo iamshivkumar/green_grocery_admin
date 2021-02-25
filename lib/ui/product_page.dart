@@ -66,47 +66,41 @@ class ProductPage extends ConsumerWidget {
           child: Material(
             color: Colors.white,
             elevation: 8,
-            child: product.quantity > 0
-                ? Consumer(
-                    builder: (context, watch, child) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            color: Theme.of(context).primaryColor,
-                            splashColor:
-                                Theme.of(context).primaryColor.withOpacity(0.2),
-                            highlightColor: Colors.transparent,
-                            icon: Icon(Icons.remove_circle_outline),
-                            onPressed: product.quantity != 0
-                                ? () => model.updateProductQuantity(
-                                    id: product.id, qt: -1)
-                                : null,
-                            iconSize: 32,
-                          ),
-                          Text(
-                            product.quantity.toString(),
-                            style: TextStyle(
-                              fontSize: 24,
-                            ),
-                          ),
-                          IconButton(
-                            color: Theme.of(context).primaryColor,
-                            splashColor:
-                                Theme.of(context).primaryColor.withOpacity(0.2),
-                            highlightColor: Colors.transparent,
-                            icon: Icon(Icons.add_circle_outline),
-                            onPressed: () => model.updateProductQuantity(
-                                id: product.id, qt: 1),
-                            iconSize: 32,
-                          ),
-                        ],
-                      );
-                    },
+            child:Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        color: Theme.of(context).primaryColor,
+                        splashColor:
+                            Theme.of(context).primaryColor.withOpacity(0.2),
+                        highlightColor: Colors.transparent,
+                        icon: Icon(Icons.remove_circle_outline),
+                        onPressed: product.quantity != 0
+                            ? () => model.updateProductQuantity(
+                                id: product.id, qt: -1)
+                            : null,
+                        iconSize: 32,
+                      ),
+                      Text(
+                        product.quantity.toString(),
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: product.quantity==0?Colors.red:Colors.black
+                        ),
+                      ),
+                      IconButton(
+                        color: Theme.of(context).primaryColor,
+                        splashColor:
+                            Theme.of(context).primaryColor.withOpacity(0.2),
+                        highlightColor: Colors.transparent,
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: () =>
+                            model.updateProductQuantity(id: product.id, qt: 1),
+                        iconSize: 32,
+                      ),
+                    ],
                   )
-                : Center(
-                    child: Text("Out Of Stock"),
-                  ),
+               
           ),
         ),
         body: ListView(
