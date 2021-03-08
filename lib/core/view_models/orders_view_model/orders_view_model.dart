@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:green_grocery_admin/core/models/deliveryBoy.dart';
 
 class OrdersViewModel extends ChangeNotifier {
-  
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String deliveryDay;
   String deliveryBy;
@@ -20,7 +19,9 @@ class OrdersViewModel extends ChangeNotifier {
   }
 
   void setAsPacked(String id) {
-    _firestore.collection("orders").doc(id).update({"status": "Packed"});
+    try {
+      _firestore.collection("orders").doc(id).update({"status": "Packed"});
+    } catch (e) {}
   }
 
   void setDeliveryBoy(DeliveryBoy value) {
@@ -29,11 +30,13 @@ class OrdersViewModel extends ChangeNotifier {
   }
 
   void setAsOutForDelivery({String id}) {
-    _firestore.collection("orders").doc(id).update({
-      "status": "Out For Delivery",
-      "deliveryBoy": deliveryBoy.name,
-      "deliveryBoyId": deliveryBoy.id,
-    });
+    try {
+      _firestore.collection("orders").doc(id).update({
+        "status": "Out For Delivery",
+        "deliveryBoy": deliveryBoy.name,
+        "deliveryBoyMobile": deliveryBoy.mobile,
+      });
+    } catch (e) {}
   }
 
   bool mapMode = false;

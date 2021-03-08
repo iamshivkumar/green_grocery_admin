@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthViewModel extends ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,7 +14,7 @@ class AuthViewModel extends ChangeNotifier {
   bool phoneLoading = false;
   bool otpSent = false;
 
-  void verifyPhoneNumber({VoidCallback onVerify}) async {
+  void startPhoneAuth({VoidCallback onVerify}) async {
     phoneLoading = true;
     otpSent = false;
     notifyListeners();
@@ -23,7 +24,7 @@ class AuthViewModel extends ChangeNotifier {
           .where("mobile", isEqualTo: phoneNumberController.text)
           .get();
       if (admins.docs.isEmpty) {
-        print("admin not registered");
+        Fluttertoast.showToast(msg: "Phone number not registered as admin.");
         phoneLoading = false;
         notifyListeners();
         return;
@@ -35,14 +36,17 @@ class AuthViewModel extends ChangeNotifier {
           otpSent = false;
           notifyListeners();
           user = (await _auth.signInWithCredential(credential)).user;
+          Fluttertoast.showToast(msg: "Login Successful");
           onVerify();
         },
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
-            print('The provided phone number is not valid.');
+            Fluttertoast.showToast(
+                msg: "The provided phone number is not valid.");
           }
         },
         codeSent: (String verificationId, int resendToken) async {
+          Fluttertoast.showToast(msg: "OTP sent");
           otpSent = true;
           phoneLoading = false;
           _verificationId = verificationId;
@@ -59,7 +63,7 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<User> signInWithPhoneNumber() async {
+  Future<User> verifyOtp() async {
     loading = true;
     notifyListeners();
     try {
@@ -68,17 +72,18 @@ class AuthViewModel extends ChangeNotifier {
         smsCode: smsController.text,
       );
       user = (await _auth.signInWithCredential(credential)).user;
-      print("Successfully signed in UID: ${user.uid}");
+      Fluttertoast.showToast(msg: "Login Successful");
     } catch (e) {
-      print("Failed to sign in: " + e.toString());
+      Fluttertoast.showToast(msg: "Failed to sign in: " + e.code.toString());
     }
     loading = false;
     notifyListeners();
     return user;
   }
 
-  Future<void> signOut() async {
+  Future<void> logout() async {
     await _auth.signOut();
     user = null;
+    Fluttertoast.showToast(msg: "Logout Successful");
   }
 }

@@ -55,7 +55,7 @@ class _OrdersPageState extends State<OrdersPage>
                     child: Icon(
                       Icons.map_outlined,
                       size: 32,
-                      color: Colors.white,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                   Center(
@@ -64,6 +64,7 @@ class _OrdersPageState extends State<OrdersPage>
                       child: Icon(
                         Icons.location_pin,
                         size: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),

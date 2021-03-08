@@ -22,6 +22,10 @@ class DeliveryBoyViewModel {
     mobile = deliveryBoy.mobile;
   }
 
+  void deleteDeliveryBoy(String id) {
+    _firestore.collection('deliveryBoys').doc(id).delete();
+  }
+
   void addEditDeliveryBoy() {
     if (deliveryBoy != null) {
       _firestore

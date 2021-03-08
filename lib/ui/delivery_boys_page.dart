@@ -99,6 +99,11 @@ class DeliveryBoysPage extends ConsumerWidget {
                               _model.initForEdit(e);
                               showEditor();
                             }),
+                        IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _model.deleteDeliveryBoy(e.id);
+                            }),
                       ],
                     ),
                     title: Text(e.name),

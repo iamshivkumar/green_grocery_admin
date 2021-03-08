@@ -65,12 +65,14 @@ class ProductListView extends ConsumerWidget {
         ? watch(productListStreamProvider(Parameters(category, 6)))
         : watch(popularProductListStreamProvider);
     return productsStream.when(
-      data: (products) => GridView.count(
+      data: (products) => GridView(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 0.7,
+        ),
         padding: EdgeInsets.all(8),
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
         children: products
             .map((e) => ProductCard(
                   product: e,

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:green_grocery_admin/core/models/product.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -50,7 +51,7 @@ class AddEditProductViewModel extends ChangeNotifier {
     'Drinks',
     'Snacks'
   ];
-  
+
   String category = "Fruits";
   void setCategory(String value) {
     category = value;
@@ -119,6 +120,7 @@ class AddEditProductViewModel extends ChangeNotifier {
 
   // ignore: missing_return
   Future<String> uploadFile(File file) async {
+    Fluttertoast.showToast(msg: "Uploading images");
     try {
       UploadTask uploadTask = _storage
           .ref("ProductImages/" +
@@ -127,7 +129,7 @@ class AddEditProductViewModel extends ChangeNotifier {
           .putFile(file);
       return await (await uploadTask).ref.getDownloadURL();
     } on FirebaseException catch (e) {
-      print(e);
+      Fluttertoast.showToast(msg: e.code);
     }
   }
 
@@ -140,17 +142,22 @@ class AddEditProductViewModel extends ChangeNotifier {
     for (var file in files) {
       images.add(await uploadFile(file));
     }
-    _firestore.collection("products").add({
-      "name": _name,
-      "amount": _amount + " " + amountType,
-      "description": _description,
-      "images": images,
-      "price": _price,
-      "quantity": _quantity,
-      "active": active,
-      "popular": popular,
-      "category": category,
-    });
+    try {
+      await _firestore.collection("products").add({
+        "name": _name,
+        "amount": _amount + " " + amountType,
+        "description": _description,
+        "images": images,
+        "price": _price,
+        "quantity": _quantity,
+        "active": active,
+        "popular": popular,
+        "category": category,
+      });
+      Fluttertoast.showToast(msg: "Product $_name added.");
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.code);
+    }
   }
 
   Future updateProduct() async {
@@ -163,17 +170,22 @@ class AddEditProductViewModel extends ChangeNotifier {
     for (var file in files) {
       images.add(await uploadFile(file));
     }
-    _firestore.collection("products").doc(product.id).update({
-      "name": _name,
-      "amount": _amount + " " + amountType,
-      "description": _description,
-      "images": images,
-      "price": _price,
-      "quantity": _quantity,
-      "active": active,
-      "popular": popular,
-      "category": category,
-    });
+    try {
+      await _firestore.collection("products").doc(product.id).update({
+        "name": _name,
+        "amount": _amount + " " + amountType,
+        "description": _description,
+        "images": images,
+        "price": _price,
+        "quantity": _quantity,
+        "active": active,
+        "popular": popular,
+        "category": category,
+      });
+      Fluttertoast.showToast(msg: "Product $_name updated.");
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.code);
+    }
     _loading = false;
   }
 
@@ -185,8 +197,9 @@ class AddEditProductViewModel extends ChangeNotifier {
       for (var image in images) {
         _storage.refFromURL(image).delete();
       }
+      Fluttertoast.showToast(msg: "Product ${product.name} deleted.");
     } catch (e) {
-      print(e.toString());
+      Fluttertoast.showToast(msg: e.code);
     }
   }
 

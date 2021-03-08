@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:green_grocery_admin/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,7 +27,8 @@ class RefundViewModel extends ChangeNotifier {
 
       try {
         var r = await http.post(
-            "https://api.razorpay.com/v1/payments/${payment.id}/refund",
+            Uri.parse(
+                'https://api.razorpay.com/v1/payments/${payment.id}/refund'),
             headers: {
               'Content-Type': 'application/json',
               'authorization': basicAuth
@@ -53,10 +54,11 @@ class RefundViewModel extends ChangeNotifier {
           });
         } else if (r.statusCode == 400) {
           removeRequest = false;
-          print(jsonDecode(r.body)["error"]["description"]);
+          Fluttertoast.showToast(
+              msg: jsonDecode(r.body)["error"]["description"]);
         }
       } catch (e) {
-        print(e.toString());
+        Fluttertoast.showToast(msg: e.code);
       }
     }
     if (removeRequest) {

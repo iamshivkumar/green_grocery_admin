@@ -17,7 +17,16 @@ class LoginPage extends ConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Admin Login",
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -36,7 +45,7 @@ class LoginPage extends ConsumerWidget {
                         : OutlinedButton(
                             style: Theme.of(context).textButtonTheme.style,
                             onPressed: () {
-                              authModel.verifyPhoneNumber(
+                              authModel.startPhoneAuth(
                                 onVerify: () => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -56,6 +65,7 @@ class LoginPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   controller: authModel.smsController,
                   enabled: authModel.otpSent,
                   autofocus: true,
@@ -66,26 +76,31 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               authModel.loading
-                  ? CircularProgressIndicator()
-                  : MaterialButton(
-                      color: Theme.of(context).primaryColor,
-                      colorBrightness: Brightness.light,
-                      onPressed: authModel.otpSent
-                          ? () async {
-                              var user =
-                                  await authModel.signInWithPhoneNumber();
-                              if (user != null) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ),
-                                );
+                  ? Center(child: CircularProgressIndicator())
+                  : Center(
+                    child: MaterialButton(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        onPressed: authModel.otpSent
+                            ? () async {
+                                var user = await authModel.verifyOtp();
+                                if (user != null) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    ),
+                                  );
+                                }
                               }
-                            }
-                          : null,
-                      child: Text("VERIFY"),
-                    ),
+                            : null,
+                        child: Text(
+                          "VERIFY",
+                          style: TextStyle(color: Theme.of(context).accentColor),
+                        ),
+                      ),
+                  ),
             ],
           ),
         ),
