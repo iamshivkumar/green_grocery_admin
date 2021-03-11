@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_grocery_admin/core/streams/product_stream_provider.dart';
 import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
+import 'package:green_grocery_admin/ui/widgets/edit_product_quantity_sheet.dart';
 import 'add_edit_product_page.dart';
 import 'widgets/product_image_viewer.dart';
 
@@ -66,41 +67,25 @@ class ProductPage extends ConsumerWidget {
           child: Material(
             color: Colors.white,
             elevation: 8,
-            child:Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                        color: Theme.of(context).primaryColor,
-                        splashColor:
-                            Theme.of(context).primaryColor.withOpacity(0.2),
-                        highlightColor: Colors.transparent,
-                        icon: Icon(Icons.remove_circle_outline),
-                        onPressed: product.quantity != 0
-                            ? () => model.updateProductQuantity(
-                                id: product.id, qt: -1)
-                            : null,
-                        iconSize: 32,
-                      ),
-                      Text(
-                        product.quantity.toString(),
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: product.quantity==0?Colors.red:Colors.black
-                        ),
-                      ),
-                      IconButton(
-                        color: Theme.of(context).primaryColor,
-                        splashColor:
-                            Theme.of(context).primaryColor.withOpacity(0.2),
-                        highlightColor: Colors.transparent,
-                        icon: Icon(Icons.add_circle_outline),
-                        onPressed: () =>
-                            model.updateProductQuantity(id: product.id, qt: 1),
-                        iconSize: 32,
-                      ),
-                    ],
-                  )
-               
+            child: InkWell(
+              onTap: () => showModalBottomSheet(
+                context: context,
+                builder: (context) => EditProductQuantitySheet(product: product,),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    product.quantity.toString(),
+                    style: TextStyle(
+                        fontSize: 24,
+                        color:
+                            product.quantity == 0 ? Colors.red : Colors.black),
+                  ),
+                  Icon(Icons.edit)
+                ],
+              ),
+            ),
           ),
         ),
         body: ListView(
