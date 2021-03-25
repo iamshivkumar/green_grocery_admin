@@ -21,11 +21,13 @@ class LoginPage extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Admin Login",
-                    style: Theme.of(context).textTheme.headline4.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        )),
+                child: Text(
+                  "Admin Login",
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -78,7 +80,7 @@ class LoginPage extends ConsumerWidget {
               authModel.loading
                   ? Center(child: CircularProgressIndicator())
                   : Center(
-                    child: MaterialButton(
+                      child: MaterialButton(
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
@@ -97,10 +99,11 @@ class LoginPage extends ConsumerWidget {
                             : null,
                         child: Text(
                           "VERIFY",
-                          style: TextStyle(color: Theme.of(context).accentColor),
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor),
                         ),
                       ),
-                  ),
+                    ),
             ],
           ),
         ),

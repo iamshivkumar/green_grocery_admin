@@ -133,6 +133,16 @@ class AddEditProductViewModel extends ChangeNotifier {
     }
   }
 
+  List<String> _keys() {
+    List<String> values = [];
+    String initValue = "";
+    for (var item in _name.toLowerCase().split("")) {
+      initValue = initValue + item;
+      values.add(initValue);
+    }
+    return values;
+  }
+
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future addProduct() async {
     _loading = true;
@@ -153,8 +163,12 @@ class AddEditProductViewModel extends ChangeNotifier {
         "active": active,
         "popular": popular,
         "category": category,
+        "keys": _keys(),
       });
       Fluttertoast.showToast(msg: "Product $_name added.");
+      _firestore.collection("search_keys").doc("search_keys").update({
+        "keys": FieldValue.arrayUnion([_name])
+      });
     } catch (e) {
       Fluttertoast.showToast(msg: e.code);
     }
@@ -181,8 +195,15 @@ class AddEditProductViewModel extends ChangeNotifier {
         "active": active,
         "popular": popular,
         "category": category,
+        "keys": _keys(),
       });
       Fluttertoast.showToast(msg: "Product $_name updated.");
+      DocumentReference ref = _firestore.collection("search_keys").doc("search_keys");
+      ref.update({
+        "keys": FieldValue.arrayRemove([product.name])
+      }).whenComplete(() => ref.update({
+        "keys": FieldValue.arrayUnion([_name])
+      }));
     } catch (e) {
       Fluttertoast.showToast(msg: e.code);
     }
