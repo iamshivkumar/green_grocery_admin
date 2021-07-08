@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/models/wallet.dart';
-import 'package:green_grocery_admin/core/view_models/refund_view_model/refund_view_model_provider.dart';
+
+import '../../core/models/wallet.dart';
+import '../../core/view_models/refund_view_model/refund_view_model_provider.dart';
 import 'two_text_row.dart';
 
 class RefundRequestCard extends StatelessWidget {

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_grocery_admin/core/service/areas_polygons_provider.dart';
-import 'package:green_grocery_admin/core/service/date.dart';
-import 'package:green_grocery_admin/core/streams/orders_list_stream_provider.dart';
+import '../../core/enums/order_status.dart';
+import '../../core/service/areas_polygons_provider.dart';
+\import 'package:green_grocery_admin/core/streams/orders_list_stream_provider.dart';
 import 'package:green_grocery_admin/core/view_models/map_view_model/map_view_model_provider.dart';
 import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
 import 'package:green_grocery_admin/ui/widgets/order_card.dart';
 
 class OrdersMapView extends ConsumerWidget {
-  final String status;
-  OrdersMapView({this.status});
-  final Date _date = Date();
+  final OrderStatus status;
+  OrdersMapView({required this.status});
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var mapModel = watch(mapViewModelProvider);

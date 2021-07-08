@@ -4,39 +4,49 @@ class Product {
   final String id;
   final String name;
   final String category;
-  final double price;
   final int quantity;
-  final String amount;
   final String description;
-  final List<dynamic> images;
-  final bool active;
+  final List<String> images;
   final bool popular;
+  final String amount;
+  final double price;
+  final bool active;
 
   Product({
-    this.description,
-    this.id,
-    this.images,
-    this.name,
-    this.price,
-    this.amount,
-    this.quantity,
-    this.active,
-    this.popular,
-    this.category,
+    required this.description,
+    required this.id,
+    required this.images,
+    required this.name,
+    required this.quantity,
+    required this.popular,
+    required this.category,
+    required this.amount,
+    required this.price,
+    required this.active
   });
 
-  factory Product.fromFirestore({DocumentSnapshot doc}) {
-    Map data = doc.data();
+  factory Product.fromFirestore({required DocumentSnapshot doc}) {
+    Map data = doc.data() as Map;
     return Product(
-        id: doc.id,
-        name: data['name'],
-        price: data['price'],
-        description: data['description'],
-        images: data['images'],
-        amount: data['amount'],
-        quantity: data['quantity'],
-        active: data['active'],
-        category: data['category'],
-        popular: data['popular']);
+      id: doc.id,
+      name: data['name'],
+      description: data['description'],
+      quantity: data['quantity'],
+      category: data['category'],
+      popular: data['popular'],
+      images: data['images'].cast<String>(),
+      amount: data['amount'],
+      price: data['price'],
+      active: data['active']
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
+      "image": images,
+      "category": category,
+      "id": id,
+    };
   }
 }

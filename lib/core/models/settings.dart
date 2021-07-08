@@ -4,23 +4,22 @@ class StoreSettings {
   double serviceTaxPercentage;
   double deliveryCharge;
   final DocumentReference ref;
-  StoreSettings({this.deliveryCharge, this.serviceTaxPercentage, this.ref});
+  StoreSettings(
+      {required this.deliveryCharge,
+      required this.serviceTaxPercentage,
+      required this.ref});
 
   factory StoreSettings.fromFirestore(DocumentSnapshot doc) {
-    var data = doc.data();
+    var data = doc.data() as Map;
     return StoreSettings(
-        deliveryCharge: data["delivery"],
-        serviceTaxPercentage: data["tax%"],
-        ref: doc.reference);
+      deliveryCharge: data["delivery"],
+      serviceTaxPercentage: data["tax%"],
+      ref: doc.reference,
+    );
   }
 
-  void onChangedServiceTaxPercentage(String value) {
-    serviceTaxPercentage = double.parse(value);
-  }
 
-  void onChangedDeliveryCharge(String value) {
-    deliveryCharge = double.parse(value);
-  }
+
 
   void save() {
     ref.update({

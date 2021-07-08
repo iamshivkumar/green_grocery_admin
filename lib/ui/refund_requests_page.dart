@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/streams/refund_requests_stream_provider.dart';
+
+import '../core/streams/refund_requests_stream_provider.dart';
 import 'widgets/refund_request_card.dart';
 
 class RefundRequestsPage extends ConsumerWidget {

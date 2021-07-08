@@ -1,12 +1,14 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:green_grocery_admin/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/wallet.dart';
+
 class RefundViewModel extends ChangeNotifier {
-  RefundViewModel({this.wallet});
+  RefundViewModel({required this.wallet});
   final Wallet wallet;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool loading = false;
@@ -58,7 +60,7 @@ class RefundViewModel extends ChangeNotifier {
               msg: jsonDecode(r.body)["error"]["description"]);
         }
       } catch (e) {
-        Fluttertoast.showToast(msg: e.code);
+        Fluttertoast.showToast(msg: e.toString());
       }
     }
     if (removeRequest) {

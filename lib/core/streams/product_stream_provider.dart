@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/models/product.dart';
+
+import '../models/product.dart';
 
 final productStreamProvider = StreamProvider.family<Product, String>((ref, id) {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

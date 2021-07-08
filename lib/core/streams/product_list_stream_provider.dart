@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/models/product.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../models/product.dart';
 
 class Parameters extends Equatable {
   const Parameters(this.category, this.limit);

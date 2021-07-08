@@ -1,12 +1,13 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/streams/orders_list_stream_provider.dart';
-import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/enums/order_status.dart';
+import '../../core/streams/orders_list_stream_provider.dart';
+import '../../core/view_models/orders_view_model/orders_view_model_provider.dart';
 import 'order_card.dart';
 class OrdersPageView extends ConsumerWidget {
-  final String status;
-  OrdersPageView({this.status});
+  final OrderStatus status;
+  OrdersPageView({required this.status});
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var ordersListStream = watch(ordersListStreamProvider(status));

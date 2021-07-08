@@ -2,7 +2,7 @@ class Payment {
   final String id;
   final double amount;
 
-  Payment({this.amount, this.id});
+  Payment({required this.amount, required this.id});
 
   factory Payment.fromMap(Map<String, dynamic> map) {
     return Payment(

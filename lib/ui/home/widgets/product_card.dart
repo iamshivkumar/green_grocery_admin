@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/models/product.dart';
-import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/widgets/edit_product_quantity_sheet.dart';
-import '../product_page.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/models/product.dart';
+import '../../widgets/edit_product_quantity_sheet.dart';
+import '../../product_page.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  ProductCard({@required this.product});
+  ProductCard({required this.product});
   @override
   Widget build(BuildContext context) {
-    var model = context.read(addEditProductViewModelProvider);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -83,20 +80,13 @@ class ProductCard extends StatelessWidget {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) => EditProductQuantitySheet(
-                       product: product,
+                      product: product,
                     ),
                   );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // TextButton(
-                    //   onPressed: product.quantity != 0
-                    //       ? () =>
-                    //           model.updateProductQuantity(id: product.id, qt: -1)
-                    //       : null,
-                    //   child: Icon(Icons.remove_circle_outline),
-                    // ),
                     Text(
                       product.quantity.toString(),
                       style: TextStyle(
@@ -108,11 +98,6 @@ class ProductCard extends StatelessWidget {
                       Icons.edit,
                       size: 20,
                     )
-                    // TextButton(
-                    //   onPressed: () =>
-                    //       model.updateProductQuantity(id: product.id, qt: 1),
-                    //   child: Icon(Icons.add_circle_outline),
-                    // ),
                   ],
                 ),
               ),

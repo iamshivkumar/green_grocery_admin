@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/models/order.dart';
-import 'package:green_grocery_admin/core/service/date.dart';
+
+import '../../core/models/order.dart';
+import '../../core/service/date.dart';
 import '../order_details_page.dart';
 import 'two_text_row.dart';
 

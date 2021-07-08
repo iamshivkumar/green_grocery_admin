@@ -1,76 +1,82 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../enums/delivery_by.dart';
+import '../enums/order_status.dart';
+import 'order_product.dart';
+
 class Order {
   final String id;
-  final String code;
+
+  final String customerId;
   final String customerName;
-  final String customerAddress;
-  final GeoPoint geoPoint;
   final String customerMobile;
-  final List products;
-  final double totalPrice;
-  final double delivery;
-  final double tax;
+
+  final double deliveryCharge;
   final double price;
   final double walletAmount;
-  final String paymentMethod;
-  final String paymentStatus;
-  final String date;
+  final double total;
+
+  final List<OrderProduct> products;
   final int items;
-  final String deliveryBy;
-  final Timestamp timestamp;
-  final String status;
-  final String paymentID;
-  final String deliveryBoy;
+
+  final String code;
+  final GeoPoint location;
+  final DateTime deliveryDate;
+  final DeliveyBy deliveryBy;
+  final OrderStatus status;
+  final String? deliveryBoyMobile;
+
+  final String paymentMethod;
+  final bool paid;
+
+  final DateTime createdOn;
+
   Order({
-    this.customerAddress,
-    this.customerMobile,
-    this.customerName,
-    this.id,
-    this.price,
-    this.paymentStatus,
-    this.paymentMethod,
-    this.products,
-    this.delivery,
-    this.tax,
-    this.totalPrice,
-    this.date,
-    this.deliveryBy,
-    this.code,
-    this.items,
-    this.timestamp,
-    this.status,
-    this.geoPoint,
-    this.walletAmount,
-    this.paymentID,
-    this.deliveryBoy,
+    required this.id,
+    required this.customerName,
+    required this.customerMobile,
+    required this.deliveryCharge,
+    required this.price,
+    required this.total,
+    required this.products,
+    required this.items,
+    required this.code,
+    required this.location,
+    required this.deliveryDate,
+    required this.deliveryBy,
+    required this.status,
+    this.deliveryBoyMobile,
+    required this.walletAmount,
+    required this.paymentMethod,
+    required this.paid,
+    required this.createdOn,
+    required this.customerId,
   });
 
-  factory Order.fromFirestore({DocumentSnapshot doc}) {
-    Map data = doc.data();
-
+  factory Order.fromFirestore({required DocumentSnapshot doc}) {
+    final Map<dynamic, dynamic> data = doc.data() as Map;
+    final Iterable productsData = data['products'];
+    final Timestamp deliveryDateData = data['delivery_date'];
+    final Timestamp createdOnData = data['created_on'];
     return Order(
-      id: doc.id,
-      customerAddress: data['customerAddress'],
-      customerMobile: data['customerMobile'],
-      customerName: data['customerName'],
-      price: data['price'],
-      paymentStatus: data['payment'],
-      paymentMethod: data['paymentMethod'],
-      products: data['products'],
-      delivery: data['delivery'],
-      tax: data['tax'],
-      totalPrice: data['total'],
-      date: data['date'],
-      deliveryBy: data['deliveryBy'],
-      code: data['code'],
-      timestamp: data['timestamp'],
-      items: data['items'],
-      status: data['status'],
-      geoPoint: data['location'],
-      walletAmount: data['walletAmount'],
-      paymentID: data['paymentID'],
-      deliveryBoy: data["deliveryBoy"] ?? "",
-    );
+        code: data['code'],
+        createdOn: createdOnData.toDate(),
+        customerId: data['customer_id'],
+        customerMobile: data['customer_mobile'],
+        customerName: data['customer_name'],
+        deliveryBy: getDeliveyBy(data['delivery_by']),
+        deliveryDate: deliveryDateData.toDate(),
+        deliveryBoyMobile: data['delivery_boy_mobile'],
+        deliveryCharge: data['delivery_charge'],
+        id: doc.id,
+        location: data['location'],
+        paid: data['paid'],
+        paymentMethod: data['payment_method'],
+        price: data['price'],
+        products: productsData.map((e) => OrderProduct.fromMap(e)).toList(),
+        status: getStatus(data['status']),
+        walletAmount: data['wallet_amount'],
+        items: data['items'],
+        total: data['total']);
   }
 }

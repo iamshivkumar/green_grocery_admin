@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/models/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
+
+import '../../core/models/product.dart';
+import '../../core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
 
 class EditProductQuantitySheet extends StatefulWidget {
   final Product product;

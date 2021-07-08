@@ -1,48 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/service/date.dart';
-import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/widgets/orders_map_view.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../core/enums/delivery_by.dart';
+import '../core/enums/order_status.dart';
+import '../core/view_models/orders_view_model/orders_view_model_provider.dart';
+import '../utils/utils.dart';
 import 'widgets/orders_card_view.dart';
+import 'widgets/orders_map_view.dart';
 
-class OrdersPage extends StatefulWidget {
-  @override
-  _OrdersPageState createState() => _OrdersPageState();
-}
-
-class _OrdersPageState extends State<OrdersPage>
-    with SingleTickerProviderStateMixin {
-  final List<String> tabTexts = [
-    "Pending",
-    "Packed",
-    "Out For Delivery",
-    "Delivered",
-    "Cancelled"
-  ];
-
-  final List<String> deliveryByRanges = [
-    "9:00 AM - 10:30 AM",
-    '10:00 AM - 11:00 AM',
-    '12:00 PM - 1:00 PM',
-    '2:00 PM - 4:00 PM'
-  ];
-  TabController _controller;
-  final Date _date = Date();
-
-  @override
-  void initState() {
-    _controller = TabController(vsync: this, length: 5);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class OrdersPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final _controller =
+        useTabController(initialLength: OrderStatus.values.length);
     return Consumer(
       builder: (context, watch, child) {
         var model = watch(ordersViewModelProvider);
@@ -78,16 +50,14 @@ class _OrdersPageState extends State<OrdersPage>
             title: Text('My Orders'),
             bottom: TabBar(
               onTap: (value) {
-                if (model.mapMode) {
-                  setState(() {});
-                }
+                if (model.mapMode) {}
               },
               controller: _controller,
               isScrollable: true,
-              tabs: tabTexts
+              tabs: OrderStatus.values
                   .map(
                     (e) => Tab(
-                      text: e,
+                      text: describeEnum(e),
                     ),
                   )
                   .toList(),
@@ -97,11 +67,11 @@ class _OrdersPageState extends State<OrdersPage>
             children: [
               model.mapMode
                   ? OrdersMapView(
-                      status: tabTexts[_controller.index],
+                      status: OrderStatus.values[_controller.index],
                     )
                   : TabBarView(
                       controller: _controller,
-                      children: tabTexts
+                      children: OrderStatus.values
                           .map(
                             (e) => OrdersPageView(
                               status: e,
@@ -136,8 +106,7 @@ class _OrdersPageState extends State<OrdersPage>
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
-                                children: [
-                                  Padding(
+                                children: Utils.deliveryDates.map((e) => Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4),
                                     child: ChoiceChip(
@@ -147,36 +116,9 @@ class _OrdersPageState extends State<OrdersPage>
                                           model.setDeliveryDay(value
                                               ? _date.activeDate(0)
                                               : null),
-                                      label: Text("Today"),
+                                      label: Text(Utils.weekday(e),),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    child: ChoiceChip(
-                                      selected: model.deliveryDay ==
-                                          _date.activeDate(1),
-                                      onSelected: (value) =>
-                                          model.setDeliveryDay(value
-                                              ? _date.activeDate(1)
-                                              : null),
-                                      label: Text("Tommorow"),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    child: ChoiceChip(
-                                      selected: model.deliveryDay ==
-                                          _date.activeDate(2),
-                                      onSelected: (value) =>
-                                          model.setDeliveryDay(value
-                                              ? _date.activeDate(2)
-                                              : null),
-                                      label: Text(_date.activeDay(2)),
-                                    ),
-                                  ),
-                                ],
+                                  ),).toList()
                               ),
                             ),
                           ],
@@ -189,17 +131,18 @@ class _OrdersPageState extends State<OrdersPage>
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
-                                  children: deliveryByRanges
+                                  children: DeliveyBy.values
                                       .map(
                                         (e) => Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               4, 0, 4, 4),
                                           child: ChoiceChip(
-                                            selected: model.deliveryBy == e,
-                                            onSelected: (value) =>
-                                                model.setDeliveryBy(
-                                                    value ? e : null),
-                                            label: Text(e),
+                                            selected: model.deliveyBy == e,
+                                            onSelected: (value) => model
+                                                .deliveyBy = value ? e : null,
+                                            label: Text(
+                                              describeEnum(e),
+                                            ),
                                           ),
                                         ),
                                       )

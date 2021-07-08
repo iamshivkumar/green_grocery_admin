@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/models/cartProduct.dart';
-import 'package:green_grocery_admin/core/streams/order_stream_provider.dart';
-import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../core/models/cartProduct.dart';
+import '../core/streams/order_stream_provider.dart';
+import '../core/view_models/orders_view_model/orders_view_model_provider.dart';
 import 'widgets/delivery_boy_selector.dart';
 import 'widgets/two_text_row.dart';
 

@@ -1,41 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/models/deliveryBoy.dart';
+
+import '../../enums/delivery_by.dart';
 
 class OrdersViewModel extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  String deliveryDay;
-  String deliveryBy;
-  DeliveryBoy deliveryBoy;
-  void setDeliveryDay(String value) {
-    deliveryDay = value;
+
+  
+
+
+  DeliveyBy? _deliveyBy;
+  DeliveyBy? get deliveyBy => _deliveyBy;
+  set deliveyBy(DeliveyBy? deliveyBy) {
+    _deliveyBy = deliveyBy;
     notifyListeners();
   }
 
-  void setDeliveryBy(String value) {
-    deliveryBy = value;
+  DateTime? _selectedDate;
+  DateTime? get selectedDate => _selectedDate;
+  set selectedDate(DateTime? selectedDate) {
+    _selectedDate = selectedDate;
     notifyListeners();
   }
 
   void setAsPacked(String id) {
     try {
       _firestore.collection("orders").doc(id).update({"status": "Packed"});
-    } catch (e) {}
-  }
-
-  void setDeliveryBoy(DeliveryBoy value) {
-    deliveryBoy = value;
-    notifyListeners();
-  }
-
-  void setAsOutForDelivery({String id}) {
-    try {
-      _firestore.collection("orders").doc(id).update({
-        "status": "Out For Delivery",
-        "deliveryBoy": deliveryBoy.name,
-        "deliveryBoyMobile": deliveryBoy.mobile,
-      });
     } catch (e) {}
   }
 

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/models/wallet.dart';
+
+import '../models/wallet.dart';
 
 final refundRequestsStreamProvider = StreamProvider<List<Wallet>>(
   (ref) {

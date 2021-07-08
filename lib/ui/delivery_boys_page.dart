@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/streams/delivery_boys_list_provider.dart';
-import 'package:green_grocery_admin/core/view_models/delivery_boys_view_model/delivery_boys_view_model.dart';
+
+import '../core/streams/delivery_boys_list_provider.dart';
+import '../core/view_models/delivery_boys_view_model/delivery_boys_view_model.dart';
 
 class DeliveryBoysPage extends ConsumerWidget {
   final DeliveryBoyViewModel _model = DeliveryBoyViewModel();

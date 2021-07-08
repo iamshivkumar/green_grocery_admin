@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/view_models/auth_view_model/auth_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/delivery_boys_page.dart';
-import 'package:green_grocery_admin/ui/login_page.dart';
-import 'package:green_grocery_admin/ui/orders_page.dart';
-import 'package:green_grocery_admin/ui/refund_requests_page.dart';
-import 'package:green_grocery_admin/ui/settings_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
-    Key key,
-  }) : super(key: key);
+import '../../../core/view_models/auth_view_model/auth_view_model_provider.dart';
+import '../../delivery_boys_page.dart';
+import '../../login_page.dart';
+import '../../orders_page.dart';
+import '../../refund_requests_page.dart';
+import '../../settings_page.dart';
 
+class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+
+import '../core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
 import 'widgets/my_image_picker.dart';
 
 class AddEditProductPage extends ConsumerWidget {

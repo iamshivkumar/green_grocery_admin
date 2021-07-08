@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/streams/settings_stream_provider.dart';
+
+import '../core/streams/settings_stream_provider.dart';
 
 class SettingsPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -28,26 +29,29 @@ class SettingsPage extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        validator: (value) =>
-                            value.isEmpty ? "Enter Delivery Charge" : null,
+                        validator: (v) =>
+                            v!.isEmpty ? "Enter Delivery Charge" : null,
                         keyboardType: TextInputType.number,
                         initialValue: settings.deliveryCharge.toString(),
-                        onSaved: settings.onChangedDeliveryCharge,
-                        decoration:
-                            InputDecoration(labelText: "Delivery Charge"),
+                        onSaved: (v) =>
+                            settings.deliveryCharge = double.parse(v!),
+                        decoration: InputDecoration(
+                          labelText: "Delivery Charge",
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         keyboardType: TextInputType.number,
-                        validator: (value) => value.isEmpty
-                            ? "Enter Service Tax Percentage"
-                            : null,
+                        validator: (v) =>
+                            v!.isEmpty ? "Enter Service Tax Percentage" : null,
                         initialValue: settings.serviceTaxPercentage.toString(),
-                        onSaved: settings.onChangedServiceTaxPercentage,
+                        onSaved: (v) =>
+                            settings.serviceTaxPercentage = double.parse(v!),
                         decoration: InputDecoration(
-                            labelText: "Service Tax Percentage"),
+                          labelText: "Service Tax Percentage",
+                        ),
                       ),
                     ),
                     Padding(
@@ -55,8 +59,11 @@ class SettingsPage extends ConsumerWidget {
                       child: MaterialButton(
                         child: Text("SAVE"),
                         onPressed: () {
-                          settings.save();
-                          Navigator.pop(context);
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            settings.save();
+                            Navigator.pop(context);
+                          }
                         },
                         color: Theme.of(context).accentColor,
                       ),

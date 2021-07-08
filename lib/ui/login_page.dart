@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/view_models/auth_view_model/auth_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/home_page.dart';
+import '../core/view_models/auth_view_model/auth_view_model_provider.dart';
+import 'home/home_page.dart';
 
 class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme;
     var authModel = watch(authViewModelProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
@@ -23,7 +25,7 @@ class LoginPage extends ConsumerWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Admin Login",
-                  style: Theme.of(context).textTheme.headline4.copyWith(
+                  style: style.headline4!.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),

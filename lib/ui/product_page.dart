@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/core/streams/product_stream_provider.dart';
-import 'package:green_grocery_admin/core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/widgets/edit_product_quantity_sheet.dart';
+
+import '../core/streams/product_stream_provider.dart';
+import '../core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
 import 'add_edit_product_page.dart';
+import 'widgets/edit_product_quantity_sheet.dart';
 import 'widgets/product_image_viewer.dart';
 
 class ProductPage extends ConsumerWidget {
   final String id;
-  ProductPage({this.id});
+  ProductPage({required this.id});
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var productStream = watch(productStreamProvider(id));

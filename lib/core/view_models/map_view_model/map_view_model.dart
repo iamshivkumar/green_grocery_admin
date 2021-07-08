@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_grocery_admin/core/models/order.dart';
+
+import '../../models/order.dart';
 
 class MapViewModel extends ChangeNotifier {
   GoogleMapController controller;

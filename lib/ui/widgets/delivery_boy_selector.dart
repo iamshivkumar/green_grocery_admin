@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/view_models/orders_view_model/orders_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/widgets/custom_radio_listtile.dart';
-import 'package:green_grocery_admin/core/streams/delivery_boys_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/streams/delivery_boys_list_provider.dart';
+import '../../core/view_models/orders_view_model/orders_view_model_provider.dart';
+import 'custom_radio_listtile.dart';
 class DeliveryBoySelector extends ConsumerWidget {
   const DeliveryBoySelector({
     Key key,
