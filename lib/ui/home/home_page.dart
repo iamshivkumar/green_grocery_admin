@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:green_grocery_admin/core/models/product.dart';
 
 import '../../utils/utils.dart';
-import '../add_edit_product_page.dart';
+import '../write_product_page.dart';
 import 'widgets/drawer_menu.dart';
 import 'widgets/product_list_view.dart';
 
@@ -16,7 +17,9 @@ class HomePage extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddEditProductPage(),
+              builder: (context) => WriteProductPage(
+                product: Product.empty(),
+              ),
             ),
           ),
           child: Icon(Icons.add),

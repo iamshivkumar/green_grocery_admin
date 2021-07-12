@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:green_grocery_admin/core/enums/order_status.dart';
 
 import '../models/order.dart';
 
-final ordersListStreamProvider = StreamProvider.family<List<Order>, String>(
+final ordersListStreamProvider = StreamProvider.family<List<Order>, OrderStatus>(
   (ref, status) {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     return _firestore

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TwoTextRow extends StatelessWidget {
   final String text1;
   final String text2;
-  TwoTextRow({@required this.text1, @required this.text2});
+  TwoTextRow({required this.text1, required this.text2});
 
   @override
   Widget build(BuildContext context) {

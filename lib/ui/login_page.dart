@@ -26,9 +26,9 @@ class LoginPage extends ConsumerWidget {
                 child: Text(
                   "Admin Login",
                   style: style.headline4!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Padding(
@@ -41,13 +41,16 @@ class LoginPage extends ConsumerWidget {
                         maxLength: 10,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                            labelText: "Phone Number", prefixText: "+91 "),
+                          labelText: "Phone Number",
+                          prefixText: "+91 ",
+                        ),
                       ),
                     ),
                     authModel.phoneLoading
-                        ? CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                          color: theme.cardColor,
+                        )
                         : OutlinedButton(
-                            style: Theme.of(context).textButtonTheme.style,
                             onPressed: () {
                               authModel.startPhoneAuth(
                                 onVerify: () => Navigator.pushReplacement(
@@ -80,12 +83,14 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               authModel.loading
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: theme.cardColor,
+                      ),
+                    )
                   : Center(
                       child: MaterialButton(
                         color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
                         onPressed: authModel.otpSent
                             ? () async {
                                 var user = await authModel.verifyOtp();

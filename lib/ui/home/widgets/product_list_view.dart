@@ -11,7 +11,7 @@ class ProductListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var productsStream = category != "Popular"
-        ? watch(productListStreamProvider(Parameters(category, 6)))
+        ? watch(productListStreamProvider(category))
         : watch(popularProductListStreamProvider);
     return productsStream.when(
       data: (products) => GridView(
@@ -30,7 +30,10 @@ class ProductListView extends ConsumerWidget {
             )
             .toList(),
       ),
-      error: (error, stackTrace) => Text(error.toString()),
+      error: (error, stackTrace) {
+        print(error);
+        return Text(error.toString());
+      },
       loading: () => Center(
         child: CircularProgressIndicator(),
       ),

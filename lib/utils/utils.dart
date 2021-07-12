@@ -2,7 +2,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
-  static List<String> categories = [
+  static List<String> get categories => [
     'Popular',
     'Fruits',
     "Vegetables",
@@ -10,6 +10,7 @@ class Utils {
     'Drinks',
     'Snacks'
   ];
+  static List<String> get  units => ['Kg', "Gram", "Litre", "ML", 'PCS', 'Dozen'];
 
   static String formatedAddress(Placemark placemark) {
     return "${placemark.name}, ${placemark.street}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.subAdministrativeArea}, ${placemark.administrativeArea}, ${placemark.country}, ${placemark.postalCode}.";
@@ -41,5 +42,6 @@ class Utils {
     }
   }
 
-  static String formatedDate(DateTime dateTime)=>DateFormat(DateFormat.MONTH_DAY).format(dateTime);
+  static String formatedDate(DateTime dateTime) =>
+      DateFormat(DateFormat.MONTH_DAY).format(dateTime);
 }

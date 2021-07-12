@@ -52,10 +52,9 @@ class AuthViewModel extends ChangeNotifier {
           _verificationId = verificationId;
           notifyListeners();
         },
-        timeout: const Duration(seconds: 30),
+        timeout: const Duration(seconds: 0),
         codeAutoRetrievalTimeout: (String verificationId) {
           _verificationId = verificationId;
-          loading = false;
         },
       );
     } catch (e) {

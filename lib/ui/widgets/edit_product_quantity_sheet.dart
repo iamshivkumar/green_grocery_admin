@@ -1,104 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/models/product.dart';
-import '../../core/view_models/add_edit_product_view_model/add_edit_product_view_model_provider.dart';
+import '../../core/view_models/add_edit_product_view_model/write_product_view_model_provider.dart';
 
-class EditProductQuantitySheet extends StatefulWidget {
+class EditProductQuantitySheet extends HookWidget {
   final Product product;
-  EditProductQuantitySheet({this.product});
-
-  @override
-  _EditProductQuantitySheetState createState() =>
-      _EditProductQuantitySheetState();
-}
-
-class _EditProductQuantitySheetState extends State<EditProductQuantitySheet> {
-  TextEditingController _controller;
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+  EditProductQuantitySheet({required this.product});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      color: Color(0xff757575),
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+    final theme = Theme.of(context);
+    final style = theme.textTheme;
+    final width = MediaQuery.of(context).viewInsets.bottom;
+    final _controller = useTextEditingController();
+    return Padding(
+      padding: EdgeInsets.fromLTRB(8, 8, 8, 8.0 + width),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              product.name,
+              textAlign: TextAlign.center,
+              style: style.headline6,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.product.name,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(widget.product.quantity.toString()),
-                  ),
-                  Expanded(
-                    child: Icon(Icons.add),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      keyboardType: TextInputType.number,
-                      autofocus: true,
-                      textAlign: TextAlign.center,
-                      onChanged: (newText) {},
-                    ),
-                  )
-                ],
-              ),
-            ),
-            ButtonBar(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("CANCEL"),
+                Expanded(
+                  child: Text(product.quantity.toString()),
                 ),
-                MaterialButton(
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    context
-                        .read(addEditProductViewModelProvider)
-                        .updateProductQuantity(
-                          id: widget.product.id,
-                          qt: int.parse(_controller.text),
-                        );
-                    Navigator.pop(context);
-                  },
-                  child: Text("ADD"),
+                Expanded(
+                  child: Icon(Icons.add),
                 ),
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    keyboardType: TextInputType.number,
+                    autofocus: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (newText) {},
+                  ),
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          ButtonBar(
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("CANCEL"),
+              ),
+              MaterialButton(
+                color: theme.accentColor,
+                onPressed: () {
+                  // context
+                  //     .read(writeProductViewModelProvider)
+                  //     .updateProductQuantity(
+                  //       id: product.id,
+                  //       qt: int.parse(_controller.text),
+                  //     );
+                  Navigator.pop(context);
+                },
+                child: Text("ADD"),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

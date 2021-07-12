@@ -7,7 +7,7 @@ import 'two_text_row.dart';
 
 class RefundRequestCard extends StatelessWidget {
   final Wallet wallet;
-  RefundRequestCard({this.wallet});
+  RefundRequestCard({required this.wallet});
   @override
   Widget build(BuildContext context) {
     return Padding(

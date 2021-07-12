@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class CustomRadioListTile extends StatelessWidget {
   final bool value;
   final bool active;
-  final Widget title;
-  final Widget subtitle;
+  final Widget? title;
+  final Widget? subtitle;
   final VoidCallback onTap;
   CustomRadioListTile(
-      {@required this.value,
-      @required this.onTap,
+      {required this.value,
+      required this.onTap,
       this.title,
       this.subtitle,
       this.active = true});

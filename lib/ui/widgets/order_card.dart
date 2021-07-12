@@ -1,13 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:green_grocery_admin/utils/utils.dart';
 
 import '../../core/models/order.dart';
-import '../../core/service/date.dart';
 import '../order_details_page.dart';
 import 'two_text_row.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
-  const OrderCard({Key key, this.order}) : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +32,18 @@ class OrderCard extends StatelessWidget {
               children: [
                 TwoTextRow(
                   text1: "Delivery Date",
-                  text2: order.date,
+                  text2: Utils.formatedDate(order.deliveryDate),
                 ),
                 TwoTextRow(
                   text1: "Delivery By",
-                  text2: order.deliveryBy,
+                  text2: describeEnum(order.deliveryBy),
                 ),
                 Divider(
                   height: 0.5,
                 ),
                 TwoTextRow(
                   text1: "Ordered at",
-                  text2: Date().datetime(order.timestamp),
+                  text2: Utils.formatedDate(order.createdOn),
                 ),
                 TwoTextRow(
                   text1: "Items",
@@ -50,11 +51,11 @@ class OrderCard extends StatelessWidget {
                 ),
                 TwoTextRow(
                   text1: "Price",
-                  text2: "₹" + order.totalPrice.toString(),
+                  text2: "₹" + order.total.toInt().toString(),
                 ),
                 TwoTextRow(
                   text1: "Payment (${order.paymentMethod})",
-                  text2: order.paymentStatus,
+                  text2: order.paid ? "Paid" : "Not Paid",
                 ),
               ],
             ),
@@ -65,10 +66,9 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-///[SmallOrderCard] used in [Orders_Map_View] widget
 class SmallOrderCard extends StatelessWidget {
   final Order order;
-  const SmallOrderCard({Key key, this.order}) : super(key: key);
+  const SmallOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class SmallOrderCard extends StatelessWidget {
               children: [
                 TwoTextRow(
                   text1: "Ordered at",
-                  text2: Date().datetime(order.timestamp),
+                  text2: Utils.formatedDate(order.createdOn),
                 ),
                 TwoTextRow(
                   text1: "Items",
@@ -100,11 +100,11 @@ class SmallOrderCard extends StatelessWidget {
                 ),
                 TwoTextRow(
                   text1: "Price",
-                  text2: "₹" + order.totalPrice.toString(),
+                  text2: "₹" + order.total.toString().toString(),
                 ),
                 TwoTextRow(
                   text1: "Payment (${order.paymentMethod})",
-                  text2: order.paymentStatus,
+                  text2: order.paid ? "Paid" : "Not Paid",
                 ),
               ],
             ),

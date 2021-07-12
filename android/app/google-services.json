@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "812880352237",
-    "project_id": "groceryapp-e3501",
-    "storage_bucket": "groceryapp-e3501.appspot.com"
+    "project_number": "101531244783",
+    "project_id": "grocery-b696e",
+    "storage_bucket": "grocery-b696e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:812880352237:android:963e673c9283d4b4104de4",
+        "mobilesdk_app_id": "1:101531244783:android:23ff3e19aad473825b231a",
         "android_client_info": {
-          "package_name": "com.shivkonade.green_grocery_admin"
+          "package_name": "com.shivkumar.grocery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "812880352237-51s1f0pr9l98othqtu0c2hru7m814enb.apps.googleusercontent.com",
+          "client_id": "101531244783-oihd249fcb7dhfr3v6quldmph1dr3maj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shivkumar.grocery",
+            "certificate_hash": "a54287523e93f48120b1691630f2b6217e4069dd"
+          }
+        },
+        {
+          "client_id": "101531244783-9fqmdennqq30dk90sajanp7c2bvt5eer.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBM-phaiw_EWacsx7DEtoYNc-pSfkgHGGM"
+          "current_key": "AIzaSyDazC9PoOwST_CD8vOO5vX9PZCjFv4F2do"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "812880352237-51s1f0pr9l98othqtu0c2hru7m814enb.apps.googleusercontent.com",
+              "client_id": "101531244783-9fqmdennqq30dk90sajanp7c2bvt5eer.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -36,27 +44,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:812880352237:android:82b98eb049157100104de4",
+        "mobilesdk_app_id": "1:101531244783:android:a560d56fb8caa0075b231a",
         "android_client_info": {
-          "package_name": "com.shivkumarkonade.green_grocery"
+          "package_name": "com.shivkumar.grocery_admin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "812880352237-51s1f0pr9l98othqtu0c2hru7m814enb.apps.googleusercontent.com",
+          "client_id": "101531244783-pm47b1ica8cid9j3c90d418g1stcuj54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shivkumar.grocery_admin",
+            "certificate_hash": "a54287523e93f48120b1691630f2b6217e4069dd"
+          }
+        },
+        {
+          "client_id": "101531244783-9fqmdennqq30dk90sajanp7c2bvt5eer.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBM-phaiw_EWacsx7DEtoYNc-pSfkgHGGM"
+          "current_key": "AIzaSyDazC9PoOwST_CD8vOO5vX9PZCjFv4F2do"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "812880352237-51s1f0pr9l98othqtu0c2hru7m814enb.apps.googleusercontent.com",
+              "client_id": "101531244783-9fqmdennqq30dk90sajanp7c2bvt5eer.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

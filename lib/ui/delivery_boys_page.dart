@@ -15,26 +15,26 @@ class DeliveryBoysPage extends ConsumerWidget {
         context: context,
         builder: (context) => AlertDialog(
           title: Text(
-              (_model.deliveryBoy != null ? "Edit" : "Add") + " Delivery Boy"),
+              (_model.deliveryBoy.id != null ? "Edit" : "Add") + " Delivery Boy"),
           content: Form(
             key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
-                  onSaved: _model.setName,
-                  initialValue: _model.name,
+                  onSaved: (v)=>_model.deliveryBoy.name = v!,
+                  initialValue: _model.deliveryBoy.name,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(labelText: "Name"),
                   validator: (value) =>
-                      value.isEmpty ? "Enter name of delivery boy" : null,
+                      value!.isEmpty ? "Enter name of delivery boy" : null,
                 ),
                 TextFormField(
-                  onSaved: _model.setMobile,
-                  initialValue: _model.mobile,
+                  onSaved: (v)=> _model.deliveryBoy.mobile = v!,
+                  initialValue: _model.deliveryBoy.mobile,
                   maxLength: 10,
                   keyboardType: TextInputType.phone,
-                  validator: (value) => value.isEmpty
+                  validator: (value) => value!.isEmpty
                       ? "Enter Phone Number of delivery boy"
                       : null,
                   decoration: InputDecoration(
@@ -59,13 +59,13 @@ class DeliveryBoysPage extends ConsumerWidget {
             ),
             MaterialButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
                   _model.addEditDeliveryBoy();
                   Navigator.pop(context);
                 }
               },
-              child: Text(_model.deliveryBoy != null ? "SAVE" : "ADD"),
+              child: Text(_model.deliveryBoy.id != null ? "SAVE" : "ADD"),
               color: Theme.of(context).primaryColor,
             )
           ],
@@ -97,13 +97,13 @@ class DeliveryBoysPage extends ConsumerWidget {
                         IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              _model.initForEdit(e);
+                              _model.deliveryBoy = e;
                               showEditor();
                             }),
                         IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              _model.deleteDeliveryBoy(e.id);
+                              _model.deleteDeliveryBoy(e.id!);
                             }),
                       ],
                     ),

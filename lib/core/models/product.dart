@@ -1,29 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_grocery_admin/utils/utils.dart';
 
 class Product {
   final String id;
-  final String name;
-  final String category;
-  final int quantity;
-  final String description;
-  final List<String> images;
-  final bool popular;
-  final String amount;
-  final double price;
-  final bool active;
+  String name;
+  String category;
+  int quantity;
+  String description;
+  List<String> images;
+  bool popular;
+  String amount;
+  double price;
+  bool active;
+  String unit;
 
-  Product({
-    required this.description,
-    required this.id,
-    required this.images,
-    required this.name,
-    required this.quantity,
-    required this.popular,
-    required this.category,
-    required this.amount,
-    required this.price,
-    required this.active
-  });
+  Product(
+      {required this.description,
+      required this.id,
+      required this.images,
+      required this.name,
+      required this.quantity,
+      required this.popular,
+      required this.category,
+      required this.amount,
+      required this.price,
+      required this.active,
+      required this.unit});
 
   factory Product.fromFirestore({required DocumentSnapshot doc}) {
     Map data = doc.data() as Map;
@@ -37,16 +39,50 @@ class Product {
       images: data['images'].cast<String>(),
       amount: data['amount'],
       price: data['price'],
-      active: data['active']
+      active: data['active'],
+      unit: data['unit'],
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      "name": name,
-      "image": images,
-      "category": category,
+  factory Product.empty() => Product(
+        description: '',
+        id: '',
+        images: [],
+        name: '',
+        quantity: 0,
+        popular: false,
+        category: Utils.categories.first,
+        amount: '',
+        price: 0,
+        active: true,
+        unit: Utils.units.first,
+      );
+
+  Map<String, dynamic> toMap({bool forUpdate = false}) {
+    var map = {
       "id": id,
+      "name": name,
+      "description": description,
+      "quantity": quantity,
+      "images": images,
+      "category": category,
+      "popular": popular,
+      "amount": amount,
+      'price': price,
+      'active': active,
+      'unit': unit,
     };
+    if (forUpdate) {
+      map = {
+        ...map,
+        "updated_on": Timestamp.now(),
+      };
+    } else {
+      map = {
+        ...map,
+        "created_on": Timestamp.now(),
+      };
+    }
+    return map;
   }
 }

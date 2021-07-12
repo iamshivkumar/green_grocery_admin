@@ -8,6 +8,7 @@ class ProductCard extends StatelessWidget {
   ProductCard({required this.product});
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -52,14 +53,14 @@ class ProductCard extends StatelessWidget {
                               Text(
                                 '₹' + product.price.toString() + " / ",
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Theme.of(context).primaryColor),
+                                    fontSize: 16, color: theme.primaryColor),
                               ),
                               Text(
                                 product.amount,
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: Theme.of(context).primaryColor),
+                                  fontSize: 12,
+                                  color: theme.primaryColor,
+                                ),
                               ),
                             ],
                           ),
@@ -79,8 +80,15 @@ class ProductCard extends StatelessWidget {
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     builder: (context) => EditProductQuantitySheet(
                       product: product,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      ),
                     ),
                   );
                 },

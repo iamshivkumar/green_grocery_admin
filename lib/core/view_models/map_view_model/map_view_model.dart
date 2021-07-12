@@ -5,17 +5,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../models/order.dart';
 
 class MapViewModel extends ChangeNotifier {
-  GoogleMapController controller;
 
-  void setController(GoogleMapController value) {
-    controller = value;
-  }
+  Order? _order;
 
-  Order order;
-  void setOrder(Order value) {
-    order = value;
+  Order? get order => _order;
+
+  set order(Order? order) {
+    _order = order;
     notifyListeners();
   }
+
+
 
   bool _loading = false;
   bool get loading => _loading;
@@ -36,7 +36,5 @@ class MapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onCameraMove(CameraPosition position) {
-    _position = position;
-  }
+
 }
