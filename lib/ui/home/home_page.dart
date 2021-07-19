@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_grocery_admin/core/models/product.dart';
 
 import '../../utils/utils.dart';
-import '../write_product_page.dart';
+import '../product/write_product_page.dart';
 import 'widgets/drawer_menu.dart';
 import 'widgets/product_list_view.dart';
 

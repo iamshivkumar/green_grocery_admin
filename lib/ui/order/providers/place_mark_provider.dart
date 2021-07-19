@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../utils/utils.dart';
+import '../../../utils/utils.dart';
 
 final placeProvider = FutureProvider.family<String, GeoPoint>(
   (ref, point) async {

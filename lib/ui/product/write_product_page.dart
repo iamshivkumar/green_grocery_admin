@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:green_grocery_admin/core/models/product.dart';
+import 'package:green_grocery_admin/ui/product/providers/write_product_view_model_provider.dart';
 import 'package:green_grocery_admin/utils/utils.dart';
-import '../core/view_models/add_edit_product_view_model/write_product_view_model_provider.dart';
 import 'widgets/my_image_picker.dart';
 
 class WriteProductPage extends ConsumerWidget {

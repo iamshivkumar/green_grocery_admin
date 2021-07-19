@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/models/product.dart';
-import '../../core/view_models/add_edit_product_view_model/write_product_view_model_provider.dart';
+import '../../../core/models/product.dart';
 
 class EditProductQuantitySheet extends HookWidget {
   final Product product;

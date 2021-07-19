@@ -4,8 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../models/product.dart';
+import '../../../core/models/product.dart';
+
+final writeProductViewModelProvider =
+    ChangeNotifierProvider.autoDispose.family<WriteProductViewModel, Product>(
+  (ref, product) => WriteProductViewModel(product),
+);
+
 
 class WriteProductViewModel extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

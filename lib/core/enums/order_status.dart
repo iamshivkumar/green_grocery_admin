@@ -1,16 +1,16 @@
-enum OrderStatus { Ordered, Packed, OutForDelivery, Delivered, Cancelled }
+class OrderStatus {
+  static const String pending = "Pending";
 
-OrderStatus getStatus(String status) {
-  switch (status) {
-    case "Packed":
-      return OrderStatus.Packed;
-    case "OutForDelivery":
-      return OrderStatus.OutForDelivery;
-    case "Delivered":
-      return OrderStatus.Delivered;
-    case "Cancelled":
-      return OrderStatus.Cancelled;
-    default:
-      return OrderStatus.Ordered;
-  }
+  static const String packed = "Packed";
+  static const String outForDelivery = "Out For Delivery";
+  static const String delivered = "Delivered";
+  static const String cancelled = "Cancelled";
+
+  static const List<String> values = [
+    pending,
+    packed,
+    outForDelivery,
+    delivered,
+    cancelled
+  ];
 }

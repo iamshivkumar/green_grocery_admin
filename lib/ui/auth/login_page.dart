@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../core/view_models/auth_view_model/auth_view_model_provider.dart';
-import 'home/home_page.dart';
+import 'package:green_grocery_admin/ui/auth/providers/auth_view_model_provider.dart';
+import '../home/home_page.dart';
 
 class LoginPage extends ConsumerWidget {
   @override

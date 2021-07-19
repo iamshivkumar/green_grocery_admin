@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_grocery_admin/core/enums/order_status.dart';
-import 'package:green_grocery_admin/core/service/place_mark_provider.dart';
+import 'package:green_grocery_admin/ui/order/providers/order_view_model_provider.dart';
+import 'package:green_grocery_admin/ui/order/providers/place_mark_provider.dart';
 import 'package:green_grocery_admin/utils/utils.dart';
 
-import '../core/streams/order_stream_provider.dart';
-import 'widgets/delivery_boy_selector.dart';
-import 'widgets/two_text_row.dart';
+import 'providers/order_provider.dart';
+import '../widgets/delivery_boy_selector.dart';
+import '../widgets/two_text_row.dart';
+import 'widgets/white_card.dart';
 
 class OrderDetailsPage extends ConsumerWidget {
   final String id;
@@ -17,8 +19,9 @@ class OrderDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final theme = Theme.of(context);
-    final orderStream = watch(orderStreamProvider(id));
-
+    final style = theme.textTheme;
+    final orderStream = watch(orderProvider(id));
+    final model = context.read(orderViewModelProvider(id));
     return Scaffold(
       appBar: AppBar(
         title: Text('Order Details'),
@@ -29,18 +32,18 @@ class OrderDetailsPage extends ConsumerWidget {
 
           Widget widget() {
             switch (order.status) {
-              case OrderStatus.Ordered:
+              case OrderStatus.pending:
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: MaterialButton(
                     color: Theme.of(context).accentColor,
                     onPressed: () {
-                      // model.setAsPacked(id);
+                      model.setAsPacked();
                     },
                     child: Text("SET AS PACKED"),
                   ),
                 );
-              case OrderStatus.Packed:
+              case OrderStatus.packed:
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: MaterialButton(
@@ -56,7 +59,7 @@ class OrderDetailsPage extends ConsumerWidget {
                     child: Text("SET AS OUT FOR DELIVERY"),
                   ),
                 );
-              case OrderStatus.OutForDelivery:
+              case OrderStatus.outForDelivery:
                 return TwoTextRow(
                     text1: "Delivery Boy", text2: order.deliveryBoyMobile!);
               default:
@@ -75,9 +78,7 @@ class OrderDetailsPage extends ConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Products',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: theme.primaryColor),
+                        style: style.headline6,
                       ),
                     ),
                     Column(
@@ -107,12 +108,7 @@ class OrderDetailsPage extends ConsumerWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Order Summary',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor),
-                      ),
+                      child: Text('Order Summary', style: style.headline6),
                     ),
                     TwoTextRow(
                       text1: "Items (6)",
@@ -141,13 +137,11 @@ class OrderDetailsPage extends ConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Delivery Details',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor),
+                        style: style.headline6,
                       ),
                     ),
                     TwoTextRow(
-                        text1: "Status", text2: describeEnum(order.status)),
+                        text1: "Status", text2: order.status),
                     widget(),
                     Divider(),
                     TwoTextRow(
@@ -201,9 +195,7 @@ class OrderDetailsPage extends ConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Payment',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor),
+                        style: style.headline6,
                       ),
                     ),
                     TwoTextRow(
@@ -224,22 +216,6 @@ class OrderDetailsPage extends ConsumerWidget {
           child: CircularProgressIndicator(),
         ),
         error: (error, stackTrace) => SizedBox(),
-      ),
-    );
-  }
-}
-
-class WhiteCard extends StatelessWidget {
-  final Widget child;
-  WhiteCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Material(
-        color: Colors.white,
-        child: Padding(padding: const EdgeInsets.all(12.0), child: child),
       ),
     );
   }

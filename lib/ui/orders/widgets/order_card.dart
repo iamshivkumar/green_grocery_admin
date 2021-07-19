@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocery_admin/utils/utils.dart';
 
-import '../../core/models/order.dart';
-import '../order_details_page.dart';
-import 'two_text_row.dart';
+import '../../../core/models/order.dart';
+import '../../order/order_details_page.dart';
+import '../../widgets/two_text_row.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -103,7 +103,7 @@ class SmallOrderCard extends StatelessWidget {
                   text2: "₹" + order.total.toString().toString(),
                 ),
                 TwoTextRow(
-                  text1: "Payment (${order.paymentMethod})",
+                  text1: "Payment",
                   text2: order.paid ? "Paid" : "Not Paid",
                 ),
               ],

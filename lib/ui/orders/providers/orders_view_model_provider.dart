@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../enums/delivery_by.dart';
+import '../../../core/enums/delivery_by.dart';
+
+final ordersViewModelProvider = ChangeNotifierProvider<OrdersViewModel>(
+  (ref) => OrdersViewModel(),
+);
+
 
 class OrdersViewModel extends ChangeNotifier {
 
@@ -24,6 +30,8 @@ class OrdersViewModel extends ChangeNotifier {
     mapMode = value;
     notifyListeners();
   }
+
+
 
    
 }

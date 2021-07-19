@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/product.dart';
+import '../../../core/models/product.dart';
 
 
 
-final productListStreamProvider =
+final productsProvider =
     StreamProvider.family<List<Product>,String>((ref, category) {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   return _firestore

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/streams/popular_product_list_stream_provider.dart';
-import '../../../core/streams/product_list_stream_provider.dart';
+import '../providers/popular_products_provider.dart';
+import '../providers/products_provider.dart';
 import 'product_card.dart';
 
 class ProductListView extends ConsumerWidget {
@@ -11,8 +11,8 @@ class ProductListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var productsStream = category != "Popular"
-        ? watch(productListStreamProvider(category))
-        : watch(popularProductListStreamProvider);
+        ? watch(productsProvider(category))
+        : watch(popularProductsProvider);
     return productsStream.when(
       data: (products) => GridView(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

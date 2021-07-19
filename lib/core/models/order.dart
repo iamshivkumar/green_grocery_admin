@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../enums/delivery_by.dart';
-import '../enums/order_status.dart';
 import 'order_product.dart';
 
 class Order {
@@ -23,7 +22,7 @@ class Order {
   final GeoPoint location;
   final DateTime deliveryDate;
   final DeliveyBy deliveryBy;
-  final OrderStatus status;
+  final String status;
   final String? deliveryBoyMobile;
 
   final String paymentMethod;
@@ -59,24 +58,25 @@ class Order {
     final Timestamp deliveryDateData = data['delivery_date'];
     final Timestamp createdOnData = data['created_on'];
     return Order(
-        code: data['code'],
-        createdOn: createdOnData.toDate(),
-        customerId: data['customer_id'],
-        customerMobile: data['customer_mobile'],
-        customerName: data['customer_name'],
-        deliveryBy: getDeliveyBy(data['delivery_by']),
-        deliveryDate: deliveryDateData.toDate(),
-        deliveryBoyMobile: data['delivery_boy_mobile'],
-        deliveryCharge: data['delivery_charge'],
-        id: doc.id,
-        location: data['location'],
-        paid: data['paid'],
-        paymentMethod: data['payment_method'],
-        price: data['price'],
-        products: productsData.map((e) => OrderProduct.fromMap(e)).toList(),
-        status: getStatus(data['status']),
-        walletAmount: data['wallet_amount'],
-        items: data['items'],
-        total: data['total']);
+      code: data['code'],
+      createdOn: createdOnData.toDate(),
+      customerId: data['customer_id'],
+      customerMobile: data['customer_mobile'],
+      customerName: data['customer_name'],
+      deliveryBy: getDeliveyBy(data['delivery_by']),
+      deliveryDate: deliveryDateData.toDate(),
+      deliveryBoyMobile: data['delivery_boy_mobile'],
+      deliveryCharge: data['delivery_charge'],
+      id: doc.id,
+      location: data['location'],
+      paid: data['paid'],
+      paymentMethod: data['payment_method'],
+      price: data['price'],
+      products: productsData.map((e) => OrderProduct.fromMap(e)).toList(),
+      status: data['status'],
+      walletAmount: data['wallet_amount'],
+      items: data['items'],
+      total: data['total'],
+    );
   }
 }

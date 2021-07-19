@@ -3,6 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final authViewModelProvider =
+    ChangeNotifierProvider.autoDispose<AuthViewModel>((ref) => AuthViewModel());
+
 
 class AuthViewModel extends ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;

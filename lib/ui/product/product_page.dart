@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:green_grocery_admin/ui/product/providers/write_product_view_model_provider.dart';
 
-import '../core/streams/product_stream_provider.dart';
-import '../core/view_models/add_edit_product_view_model/write_product_view_model_provider.dart';
+import 'providers/product_stream_provider.dart';
 import 'write_product_page.dart';
 import 'widgets/edit_product_quantity_sheet.dart';
 import 'widgets/product_image_viewer.dart';
@@ -12,7 +12,7 @@ class ProductPage extends ConsumerWidget {
   ProductPage({required this.id});
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    var productStream = watch(productStreamProvider(id));
+    var productStream = watch(productProvider(id));
     return productStream.when(
       data: (product) {
         var model = context.read(writeProductViewModelProvider(product));
