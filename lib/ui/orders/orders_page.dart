@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:green_grocery_admin/ui/orders/providers/orders_view_model_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/enums/delivery_by.dart';
 import '../../core/enums/order_status.dart';
 import '../../utils/utils.dart';
+import 'providers/orders_view_model_provider.dart';
 import 'widgets/orders_card_view.dart';
 import 'widgets/orders_map_view.dart';
 

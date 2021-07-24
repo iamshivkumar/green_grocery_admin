@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/deliveryBoy.dart';
+
+final deliveryBoyViewModelProvider = Provider((ref) => DeliveryBoyViewModel());
 
 class DeliveryBoyViewModel {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -22,5 +25,9 @@ class DeliveryBoyViewModel {
             deliveryBoy.toMap(),
           );
     }
+  }
+
+  void clear() {
+    deliveryBoy = DeliveryBoy();
   }
 }

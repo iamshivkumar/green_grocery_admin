@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/ui/orders/providers/orders_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/orders/providers/orders_provider.dart';
-import 'package:green_grocery_admin/ui/widgets/loading.dart';
-import 'package:green_grocery_admin/ui/orders/widgets/order_card.dart';
+
+import '../../widgets/loading.dart';
+import '../providers/orders_provider.dart';
+import '../providers/orders_view_model_provider.dart';
+import 'order_card.dart';
 
 class OrdersPageView extends ConsumerWidget {
   final String status;

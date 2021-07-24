@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_grocery_admin/core/enums/order_status.dart';
-import 'package:green_grocery_admin/ui/order/providers/order_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/order/providers/place_mark_provider.dart';
-import 'package:green_grocery_admin/utils/utils.dart';
 
-import 'providers/order_provider.dart';
+import '../../core/enums/order_status.dart';
+import '../../utils/utils.dart';
 import '../widgets/delivery_boy_selector.dart';
 import '../widgets/two_text_row.dart';
+import 'providers/order_provider.dart';
+import 'providers/order_view_model_provider.dart';
+import 'providers/place_mark_provider.dart';
 import 'widgets/white_card.dart';
 
 class OrderDetailsPage extends ConsumerWidget {
@@ -60,8 +60,11 @@ class OrderDetailsPage extends ConsumerWidget {
                   ),
                 );
               case OrderStatus.outForDelivery:
+              //TODO:call
                 return TwoTextRow(
-                    text1: "Delivery Boy", text2: order.deliveryBoyMobile!);
+                  text1: "Delivery Boy Mobile No.",
+                  text2: "+91" + order.deliveryBoyMobile!,
+                );
               default:
                 return SizedBox();
             }
@@ -140,8 +143,7 @@ class OrderDetailsPage extends ConsumerWidget {
                         style: style.headline6,
                       ),
                     ),
-                    TwoTextRow(
-                        text1: "Status", text2: order.status),
+                    TwoTextRow(text1: "Status", text2: order.status),
                     widget(),
                     Divider(),
                     TwoTextRow(

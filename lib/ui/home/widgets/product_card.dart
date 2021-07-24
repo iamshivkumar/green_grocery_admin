@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/models/product.dart';
-import '../../product/widgets/edit_product_quantity_sheet.dart';
 import '../../product/product_page.dart';
+import '../../product/widgets/edit_product_quantity_sheet.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;

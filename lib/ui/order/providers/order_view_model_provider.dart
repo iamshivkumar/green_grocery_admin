@@ -30,14 +30,10 @@ class OrderViewModel extends ChangeNotifier {
   }
 
   void setAsOutForDelivery({required String id}) {
-    _firestore.collection("orders").doc(id).update({
-      "status": "Out For Delivery",
-      "deliveryBoyMobile": _deliveryBoyMobile,
-    });
     try {
       _firestore.collection("orders").doc(id).update({
         "status": "Out For Delivery",
-        "deliveryBoyMobile": _deliveryBoyMobile,
+        "delivery_boy_mobile": _deliveryBoyMobile,
       });
     } catch (e) {}
   }

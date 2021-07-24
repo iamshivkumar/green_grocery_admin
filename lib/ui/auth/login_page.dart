@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/ui/auth/providers/auth_view_model_provider.dart';
+import 'providers/auth_view_model_provider.dart';
 import '../home/home_page.dart';
 
 class LoginPage extends ConsumerWidget {

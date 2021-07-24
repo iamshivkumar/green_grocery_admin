@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/core/models/product.dart';
 
+import '../../core/models/product.dart';
 import '../../utils/utils.dart';
 import '../product/write_product_page.dart';
 import 'widgets/drawer_menu.dart';

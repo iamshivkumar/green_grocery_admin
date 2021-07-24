@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:green_grocery_admin/utils/utils.dart';
 
 import '../../../core/models/order.dart';
+import '../../../utils/utils.dart';
 import '../../order/order_details_page.dart';
 import '../../widgets/two_text_row.dart';
 

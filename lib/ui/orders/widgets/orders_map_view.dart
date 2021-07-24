@@ -2,11 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_grocery_admin/ui/orders/providers/map_view_model_provider.dart';
-import 'package:green_grocery_admin/ui/orders/providers/orders_provider.dart';
-import 'package:green_grocery_admin/utils/utils.dart';
+
+import '../../../utils/utils.dart';
 import '../../product/providers/areas_polygons_provider.dart';
-import 'package:green_grocery_admin/ui/orders/widgets/order_card.dart';
+import '../providers/map_view_model_provider.dart';
+import '../providers/orders_provider.dart';
+import 'order_card.dart';
 
 class OrdersMapView extends ConsumerWidget {
   final String status;

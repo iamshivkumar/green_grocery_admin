@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_grocery_admin/ui/product/providers/write_product_view_model_provider.dart';
 
 import 'providers/product_stream_provider.dart';
-import 'write_product_page.dart';
+import 'providers/write_product_view_model_provider.dart';
 import 'widgets/edit_product_quantity_sheet.dart';
 import 'widgets/product_image_viewer.dart';
+import 'write_product_page.dart';
 
 class ProductPage extends ConsumerWidget {
   final String id;

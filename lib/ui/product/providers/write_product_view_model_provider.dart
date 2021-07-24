@@ -13,15 +13,18 @@ final writeProductViewModelProvider =
   (ref, product) => WriteProductViewModel(product),
 );
 
-
 class WriteProductViewModel extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseStorage _storage = FirebaseStorage.instance;
+  WriteProductViewModel(this.product);
 
   bool _loading = false;
-
-  WriteProductViewModel(this.product);
   bool get loading => _loading;
+  set loading(bool loading) {
+    _loading = loading;
+    notifyListeners();
+  }
+
 
   final Product product;
 
@@ -56,7 +59,7 @@ class WriteProductViewModel extends ChangeNotifier {
   List<String> get images {
     List<String> list = [];
     for (var item in product.images) {
-      if(!_removedImages.contains(item)){
+      if (!_removedImages.contains(item)) {
         list.add(item);
       }
     }
@@ -91,8 +94,9 @@ class WriteProductViewModel extends ChangeNotifier {
   }
 
   Future<void> writeProduct() async {
+    loading = true;
     for (var item in _removedImages) {
-       product.images.remove(item);
+      product.images.remove(item);
       // _deleteImage(item);
     }
     for (var item in files) {
@@ -102,11 +106,20 @@ class WriteProductViewModel extends ChangeNotifier {
       }
     }
 
-    if(product.id.isEmpty){
-      _firestore.collection("products").add(product.toMap());
+    if (product.id.isEmpty) {
+      _firestore.collection("products").add(
+            product.toMap(
+              searckKeys: _keys(),
+            ),
+          );
     } else {
-      _firestore.collection("products").doc(product.id).update(product.toMap());
+      _firestore.collection("products").doc(product.id).update(
+            product.toMap(
+              searckKeys: _keys(),
+            ),
+          );
     }
+    loading = false;
   }
 
   void deleteProduct(Product product) async {

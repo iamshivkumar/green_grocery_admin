@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:green_grocery_admin/utils/utils.dart';
+import '../../utils/utils.dart';
 
 class Product {
   final String id;
@@ -51,16 +51,15 @@ class Product {
         name: '',
         quantity: 0,
         popular: false,
-        category: Utils.categories.first,
+        category: Utils.writeCategories.first,
         amount: '',
         price: 0,
         active: true,
         unit: Utils.units.first,
       );
 
-  Map<String, dynamic> toMap({bool forUpdate = false}) {
+  Map<String, dynamic> toMap({bool forUpdate = false, required List<String> searckKeys}) {
     var map = {
-      "id": id,
       "name": name,
       "description": description,
       "quantity": quantity,
@@ -71,6 +70,7 @@ class Product {
       'price': price,
       'active': active,
       'unit': unit,
+      'keys':searckKeys,
     };
     if (forUpdate) {
       map = {

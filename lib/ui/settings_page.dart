@@ -42,20 +42,6 @@ class SettingsPage extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        validator: (v) =>
-                            v!.isEmpty ? "Enter Service Tax Percentage" : null,
-                        initialValue: settings.serviceTaxPercentage.toString(),
-                        onSaved: (v) =>
-                            settings.serviceTaxPercentage = double.parse(v!),
-                        decoration: InputDecoration(
-                          labelText: "Service Tax Percentage",
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(
                         child: Text("SAVE"),
                         onPressed: () {
@@ -77,7 +63,7 @@ class SettingsPage extends ConsumerWidget {
         loading: () => Center(
           child: CircularProgressIndicator(),
         ),
-        error: (error, stackTrace) => SizedBox(),
+        error: (error, stackTrace) => Text(error.toString()),
       ),
     );
   }

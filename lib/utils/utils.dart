@@ -10,6 +10,13 @@ class Utils {
     'Drinks',
     'Snacks'
   ];
+    static List<String> get writeCategories => [
+    'Fruits',
+    "Vegetables",
+    'Food',
+    'Drinks',
+    'Snacks'
+  ];
   static List<String> get  units => ['Kg', "Gram", "Litre", "ML", 'PCS', 'Dozen'];
 
   static String formatedAddress(Placemark placemark) {

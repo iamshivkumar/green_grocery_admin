@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/settings.dart';
 
-final settingsStreamProvider = StreamProvider(
+final settingsStreamProvider = StreamProvider<StoreSettings>(
   (ref) => FirebaseFirestore.instance
-      .collection("settings")
-      .doc("settings")
+      .collection("master_data")
+      .doc("master_data_v1")
       .snapshots().map((event) => StoreSettings.fromFirestore(event)),
 );
